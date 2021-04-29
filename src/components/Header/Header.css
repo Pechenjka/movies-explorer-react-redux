@@ -1,0 +1,22 @@
+.header {
+  max-width: 1280px;
+  margin: 0;
+  background-color: #073042;
+  padding: 21px 70px;
+}
+
+.header-black {
+  background-color: black;
+}
+
+@media screen and (max-width: 1277px) {
+  .header {
+    padding: 18px 30px;
+  }
+}
+@media screen and (max-width: 767px) {
+  .header {
+    padding: 18px 14px;
+  }
+}
+

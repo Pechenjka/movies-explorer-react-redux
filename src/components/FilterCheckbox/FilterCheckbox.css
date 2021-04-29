@@ -1,0 +1,69 @@
+.filterCheckbox {
+  width: 174px;
+  height: 20px;
+  margin: 42px auto 0;
+  padding: 0;
+  border: none;
+}
+
+/* Переключатель - коробка вокруг ползунка */
+.filterCheckbox__input-switch {
+  position: relative;
+  display: inline-block;
+  width: 36px;
+  height: 20px;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 18px;
+  display: flex;
+}
+
+/* Скрыть флажок HTML по умолчанию */
+.filterCheckbox__input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  margin-right: 48px;
+}
+
+/* Ползунок */
+.filterCheckbox__input_slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+  border-radius: 20px;
+}
+
+.filterCheckbox__input_slider::before {
+  position: absolute;
+  content: "";
+  height: 14px;
+  width: 14px;
+  left: 4px;
+  bottom: 3px;
+  background-color: white;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+.filterCheckbox__input:checked + .filterCheckbox__input_slider {
+  background-color: rgba(61, 220, 132, 1);
+}
+
+.filterCheckbox__input:focus + .filterCheckbox__input_slider {
+  box-shadow: 0 0 1px #2196f3;
+}
+
+.filterCheckbox__input:checked + .filterCheckbox__input_slider::before {
+  -webkit-transform: translateX(14px);
+  -ms-transform: translateX(14px);
+  transform: translateX(14px);
+}

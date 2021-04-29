@@ -1,0 +1,29 @@
+.headerComponent {
+  max-width: 1140px;
+  border-bottom: 1px solid rgba(218, 218, 218, 1);
+  padding-bottom: 23px;
+  padding-top: 110px;
+  display: block;
+  margin: 0 auto;
+}
+
+.headerComponent__title {
+  color: white;
+  width: 100%;
+  margin: 0;
+  font-size: 22px;
+  line-height: 27px;
+}
+
+@media screen and (max-width: 1277px) {
+  .headerComponent {
+    padding-top: 90px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .headerComponent {
+    padding-bottom: 28px;
+    padding-top: 70px;
+  }
+}

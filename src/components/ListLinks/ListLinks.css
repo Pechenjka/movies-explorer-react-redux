@@ -1,0 +1,41 @@
+.links__list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  margin: 0;
+}
+
+.links__list-container {
+  margin: 0 20px 0 0;
+}
+
+.links__link {
+  color: white;
+  text-decoration: none;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 13px;
+  line-height: 16px;
+}
+
+.links__list-container:last-of-type {
+  margin: 0;
+}
+
+.links__link:hover {
+  opacity: 0.5;
+  transition: 0.3s linear 0s;
+  text-decoration: none;
+}
+
+@media screen and (max-width: 767px) {
+  .links__list {
+    margin-top: 40px;
+  }
+
+  .links__link {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+  }
+}

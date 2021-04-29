@@ -1,0 +1,101 @@
+.card {
+  background-color: rgba(34, 34, 34, 1);
+  height: 271px;
+}
+
+.card_descripton-container {
+  height: 68px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-content: space-between;
+  padding: 0 14px;
+}
+
+.card__title {
+  max-width: 230px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 18px;
+  margin: 14px 0 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.card__duration {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 11px;
+  line-height: 13px;
+  color: rgba(139, 139, 139, 1);
+  margin: 9px 0 14px;
+}
+
+.card__button-saved-movie {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  background-color: rgba(49, 49, 49, 1);
+  margin: 19px 0 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url("../../images/icon-saved-movie.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.card__button-saved-movie:hover {
+  background-color: #ccc;
+  transition: 0.3s linear all;
+}
+
+.card__button-icon-saved {
+  background-image: url("../../images/icon-deleted-card.png");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.card__button-icon-handleSaved {
+  background-image: url("../../images/icon-saved-movie-active.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: rgba(61, 220, 132, 1);
+}
+
+.card__movie {
+  padding: 0;
+  margin: 0;
+  border: none;
+  cursor: pointer;
+  width: 364px;
+  height: 203px;
+}
+
+@media screen and (max-width: 1277px) {
+  .card {
+    height: 258px;
+  }
+
+  .card__movie {
+    width: 339px;
+    height: 190px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .card {
+    height: 236px;
+  }
+
+  .card__movie {
+    width: 100%;
+    height: 168px;
+  }
+}

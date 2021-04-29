@@ -1,0 +1,136 @@
+.navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navigation__logo {
+  width: 38px;
+}
+
+.navigation__logo:hover {
+  opacity: 0.8;
+  transition: 0.3s linear all;
+}
+
+.navigation__list-links {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  width: 100%;
+  justify-content: flex-end;
+}
+
+.navigation__link-container {
+  height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 3px;
+  margin-left: 30px;
+}
+
+.navigation__link-container_auth {
+  margin-left: 16px;
+}
+
+.navigation__link-container_auth:last-child {
+  margin-left: auto;
+  width: 100px;
+  display: flex;
+}
+
+.navigation__link {
+  height: 32px;
+  text-decoration: none;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+.navigation__link-current-address {
+  font-weight: 900;
+}
+
+.navigation__link-container:hover {
+  opacity: 0.8;
+  transition: 0.3s linear 0s;
+}
+
+.navigation__link-button {
+  color: black;
+  height: 32px;
+  width: 76px;
+  border-radius: 3px;
+  background-color: rgba(61, 220, 132, 1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.navigation__link_saved-films {
+  width: 142px;
+}
+
+.navigation__link-account_logo {
+  background-image: url("../../images/icon-account.svg");
+  object-fit: contain;
+  background-repeat: no-repeat;
+  width: 100%;
+  background-position-x: 15px;
+  background-position-y: 7px;
+  border: 2px solid rgba(170, 170, 170, 1);
+  border-radius: 50px;
+  box-sizing: border-box;
+  padding-left: 20px;
+}
+
+.navigation__burger {
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+  .navigation__burger {
+    display: block;
+  }
+
+  .navigation__burger-icon {
+    width: 28px;
+    height: 23px;
+    padding: 0;
+    margin: 0;
+    object-fit: none;
+    cursor: pointer;
+  }
+
+  .navigation__burger-icon:hover {
+    opacity: 0.8;
+    transition: 0.3s linear all;
+  }
+
+  .navigation__list-links_unActive {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .navigation__link-container {
+    margin-left: 14px;
+  }
+
+  .navigation__link {
+    font-size: 10px;
+    line-height: 16px;
+  }
+
+  .navigation__link-button {
+    height: 26px;
+    width: 54px;
+  }
+}

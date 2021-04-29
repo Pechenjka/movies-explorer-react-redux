@@ -1,0 +1,119 @@
+.burgerMenu {
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+  .burgerMenu__active {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 520px;
+    padding: 0;
+    z-index: 2;
+    background-color: black;
+    z-index: 1;
+  }
+
+  .burgerMenu__button_close {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    width: 18px;
+    height: 18px;
+    background-image: url("../../images/burger-menu-icon-close.svg");
+    background-position: center;
+    background-repeat: no-repeat;
+    object-fit: contain;
+    background-color: black;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .burgerMenu__button_close:hover {
+    opacity: 0.8;
+    transition: 0.3s linear all;
+  }
+
+  .burgerMenu__list-links {
+    width: 520px;
+    height: 100%;
+  }
+
+  .burgerMenu__list-container {
+    display: flex;
+    top: 0;
+    right: 0;
+    height: 100%;
+    flex-direction: column;
+    padding: 0;
+    list-style: none;
+    margin: 0;
+    cursor: pointer;
+  }
+
+  .burgerMenu__links-container {
+    margin-top: 28px;
+  }
+
+  .burgerMenu__links-container:hover {
+    opacity: 0.8;
+    transition: 0.3s linear all;
+  }
+
+  .burgerMenu__links-container:nth-of-type(1) {
+    margin-top: 160px;
+  }
+
+  .burgerMenu__links-container:last-of-type {
+    margin-top: 620px;
+  }
+
+  .burgerMenu__link {
+    text-decoration: none;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 22px;
+    height: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: max-content;
+    color: white;
+    margin: 0 auto;
+  }
+
+  .burgerMenu__link-current-address {
+    border-bottom: 1px solid white;
+  }
+
+  .burgerMenu__link-account_logo {
+    background-image: url("../../images/icon-account.svg");
+    object-fit: contain;
+    background-repeat: no-repeat;
+    background-position-x: 15px;
+    background-position-y: 7px;
+    border: 2px solid rgba(170, 170, 170, 1);
+    border-radius: 50px;
+    box-sizing: border-box;
+    padding-left: 20px;
+    max-width: 100px;
+    font-size: 14px;
+    line-height: 16px;
+  }
+}
+
+@media screen and (max-width: 520px) {
+  .burgerMenu__active {
+    width: 100vw;
+  }
+
+  .burgerMenu__links-container:last-of-type {
+    margin-top: 444px;
+  }
+}
