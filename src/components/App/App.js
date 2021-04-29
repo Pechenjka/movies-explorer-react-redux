@@ -12,11 +12,14 @@ import Profile from "../Profile/Profile";
 import mainApi from "../../utils/MainApi";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import moviesApi from "../../utils/MoviesApi";
+import { useDispatch } from "react-redux";
+import {hideIsLoading, showIsLoading } from "../../redux/actions";
+
 
 const App = () => {
   const [currentUser, setCurrentUser] = useState({});
   const [loggedIn, setLoggedIn] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  // const [isLoading, setIsLoading] = useState(false);
   const [errorSubmit, setErrorSubmit] = useState(false);
   const [movies, setMovies] = useState([]);
   const [showMovies, setShowMovies] = useState([]);
@@ -27,6 +30,8 @@ const App = () => {
 
   const history = useHistory();
   const { pathname } = useLocation();
+  const dispatch = useDispatch()
+
 
   useEffect(() => {
     const jwt = localStorage.getItem("jwt");
@@ -45,7 +50,8 @@ const App = () => {
 
   //Сохранение массива фильмов из внешнего API в локальное хранилище
   const getMovies = () => {
-    setIsLoading(true);
+    // setIsLoading(true);
+    dispatch(showIsLoading())
     moviesApi
       .searchFilms()
       .then((res) => {
@@ -71,7 +77,8 @@ const App = () => {
         }
       })
       .catch((err) => console.log(err))
-      .finally(() => setIsLoading(false));
+      .finally(() => dispatch(hideIsLoading()));
+      // .finally(() => setIsLoading(false));
   };
 
   // Поиск фильмов по ключевым словам в локальном хранилище
@@ -273,7 +280,7 @@ const App = () => {
             path="/movies"
             component={Movies}
             loggedIn={loggedIn}
-            isLoading={isLoading}
+            // isLoading={isLoading}
             movies={movies}
             onSearchFilms={handleSearchByWord}
             showMovies={showMovies}

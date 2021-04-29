@@ -1,4 +1,5 @@
 import { Fragment, useEffect } from "react";
+import { useSelector } from "react-redux";
 import useFormWithValidation from "../../hooks/useForm";
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
@@ -9,7 +10,7 @@ import "./Movies.css";
 
 const Movies = (props) => {
   const {
-    isLoading,
+    // isLoading,
     loggedIn,
     onSearchFilms,
     showMovies,
@@ -23,6 +24,8 @@ const Movies = (props) => {
   } = props;
 
   const { values, handleChange } = useFormWithValidation();
+
+  const loader = useSelector((state) => state.app.isLoading);
 
   //Эффект показывает короткометражные фильмы
   useEffect(() => {
@@ -72,7 +75,8 @@ const Movies = (props) => {
           setIsShortMovies={setIsShortMovies}
           isShortMovies={isShortMovies}
         />
-        {isLoading === true ? (
+        {/* {isLoading === true ? ( */}
+        {loader ? (
           <Preloader />
         ) : (
           <MoviesCardList
