@@ -8,7 +8,6 @@ import useFormWithValidation from "../../hooks/useForm";
 
 const SavedMovies = (props) => {
   const {
-    loggedIn,
     isSavedMovie,
     onSearchFilms,
     handleLikeClick,
@@ -18,6 +17,7 @@ const SavedMovies = (props) => {
     filterMovies,
     setFilterMovies,
   } = props;
+
   const [isSaved, setIsSaved] = useState(false);
 
   const { values, handleChange } = useFormWithValidation();
@@ -28,8 +28,7 @@ const SavedMovies = (props) => {
 
   useEffect(() => {
     setFilterMovies(isSavedMovie);
-    // eslint-disable-next-line
-  }, []);
+  }, [setFilterMovies, isSavedMovie]);
 
   //Эффект показывает короткометражные фильмы
   useEffect(() => {
@@ -53,7 +52,7 @@ const SavedMovies = (props) => {
 
   return (
     <Fragment>
-      <Header loggedIn={loggedIn} />
+      <Header />
       <section className="savedMovies">
         <SearchForm
           onSubmit={handleSubmit}

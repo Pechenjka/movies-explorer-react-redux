@@ -1,15 +1,25 @@
 import { useEffect } from "react";
 import useFormWithValidation from "../../hooks/useForm";
 import AuthForm from "../AuthForm/AuthForm";
+import { useDispatch } from "react-redux";
+import {handleLogin, pathMovie} from "../../redux/actions";
+import {useHistory, useLocation} from "react-router-dom";
 
-const Login = (props) => {
-  const { onLogin, errorSubmit, setErrorSubmit } = props;
+const Login = () => {
 
+  const {pathname}= useLocation()
   const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
+
+  const dispatch = useDispatch();
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    onLogin(values);
+   // const path = history.push("/movies");
+   // const history = useHistory();
+    //history.push('/movies');
+    dispatch(handleLogin(values));
+   // dispatch(pathMovie());
+    //console.log(pathname)
   };
 
   useEffect(() => {
@@ -29,9 +39,7 @@ const Login = (props) => {
       onChange={handleChange}
       errors={errors}
       isValid={isValid}
-      errorSubmit={errorSubmit}
-      setErrorSubmit={setErrorSubmit}
-    ></AuthForm>
+    />
   );
 };
 

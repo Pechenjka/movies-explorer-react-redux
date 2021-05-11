@@ -2,6 +2,8 @@ import { Link, useLocation } from "react-router-dom";
 import "./AuthForm.css";
 import Logo from "../../images/logo-header.svg";
 import { Fragment } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { hideErrorSubmit } from "../../redux/actions";
 
 const AuthForm = (props) => {
   const {
@@ -15,11 +17,12 @@ const AuthForm = (props) => {
     onChange,
     errors,
     isValid,
-    errorSubmit,
-    setErrorSubmit,
     textError,
   } = props;
+
   const { pathname } = useLocation();
+  const dispatch = useDispatch();
+  const errorSubmit = useSelector((state) => state.user.errorSubmit);
 
   return (
     <div className="authForm">
@@ -90,7 +93,7 @@ const AuthForm = (props) => {
         </button>
         <p className="form__link-text">
           {text}
-          <Link className="form__link" to={linkPath} onClick={() => setErrorSubmit(false)}>
+          <Link className="form__link" to={linkPath} onClick={() => dispatch(hideErrorSubmit())}>
             {textLink}
           </Link>
         </p>

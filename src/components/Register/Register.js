@@ -1,15 +1,20 @@
 import AuthForm from "../AuthForm/AuthForm";
 import useFormWithValidation from "../../hooks/useForm";
 import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { handleRegister } from "../../redux/actions";
+import { useHistory } from "react-router-dom";
 
-const Register = (props) => {
-  const { onRegister, errorSubmit, setErrorSubmit } = props;
-
+const Register = () => {
   const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
+  const dispatch = useDispatch();
+  const history = useHistory();
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    onRegister(values);
+    dispatch(handleRegister(values));
+    history.push("/movies");
+    // onRegister(values);
   };
 
   useEffect(() => {
@@ -29,9 +34,9 @@ const Register = (props) => {
       onChange={handleChange}
       errors={errors}
       isValid={isValid}
-      errorSubmit={errorSubmit}
-      setErrorSubmit={setErrorSubmit}
-    ></AuthForm>
+      // errorSubmit={errorSubmit}
+      // setErrorSubmit={setErrorSubmit}
+    />
   );
 };
 

@@ -1,7 +1,6 @@
-import { Route, Switch, useHistory, useLocation } from "react-router";
+import { Switch, Route, useHistory, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import "./App.css";
-import CurrentUserContext from "../../context/CurrentUserContext";
 import Main from "../Main/Main";
 import Movies from "../Movies/Movies";
 import SavedMovies from "../SavedMovies/SavedMovies";
@@ -12,15 +11,10 @@ import Profile from "../Profile/Profile";
 import mainApi from "../../utils/MainApi";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import moviesApi from "../../utils/MoviesApi";
-import { useDispatch } from "react-redux";
-import {hideIsLoading, showIsLoading } from "../../redux/actions";
-
+import { useDispatch, useSelector } from "react-redux";
+import { handleGetUserInfo, hideIsLoading, isLoggedInFalse, isLoggedInTrue, showIsLoading } from "../../redux/actions";
 
 const App = () => {
-  const [currentUser, setCurrentUser] = useState({});
-  const [loggedIn, setLoggedIn] = useState(false);
-  // const [isLoading, setIsLoading] = useState(false);
-  const [errorSubmit, setErrorSubmit] = useState(false);
   const [movies, setMovies] = useState([]);
   const [showMovies, setShowMovies] = useState([]);
   const [isShortMovies, setIsShortMovies] = useState(false);
@@ -28,10 +22,11 @@ const App = () => {
   const [isNotFoundSearch, setIsNotFoundSearch] = useState(false);
   const [filterMovies, setFilterMovies] = useState([]);
 
-  const history = useHistory();
   const { pathname } = useLocation();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+  const history = useHistory();
 
+  const loggedIn = useSelector((state) => state.user.isLoggedIn);
 
   useEffect(() => {
     const jwt = localStorage.getItem("jwt");
@@ -50,35 +45,35 @@ const App = () => {
 
   //Сохранение массива фильмов из внешнего API в локальное хранилище
   const getMovies = () => {
-    // setIsLoading(true);
-    dispatch(showIsLoading())
-    moviesApi
-      .searchFilms()
-      .then((res) => {
-        return res.map((item) => {
-          return {
-            country: item.country || "",
-            director: item.director || "",
-            duration: item.duration || "",
-            year: item.year || "",
-            description: item.description || "",
-            image: !item.image ? "" : `https://api.nomoreparties.co${item.image.url}`,
-            trailer: item.trailerLink,
-            thumbnail: !item.image ? "" : `https://api.nomoreparties.co${item.image.formats.thumbnail.url}`,
-            movieId: item.id || "",
-            nameRU: item.nameRU || "",
-            nameEN: item.nameEN || "",
-          };
-        });
-      })
-      .then((res) => {
-        if (res) {
+    if (!localStorage.getItem("storageMovies")) {
+      dispatch(showIsLoading());
+      return moviesApi
+        .searchFilms()
+        .then((res) => {
+          return res.map((item) => {
+            return {
+              country: item.country || "",
+              director: item.director || "",
+              duration: item.duration || "",
+              year: item.year || "",
+              description: item.description || "",
+              image: !item.image ? "" : `https://api.nomoreparties.co${item.image.url}`,
+              trailer: item.trailerLink,
+              thumbnail: !item.image ? "" : `https://api.nomoreparties.co${item.image.formats.thumbnail.url}`,
+              movieId: item.id || "",
+              nameRU: item.nameRU || "",
+              nameEN: item.nameEN || "",
+            };
+          });
+        })
+        .then((res) => {
+          // if (res) {
           localStorage.setItem("storageMovies", JSON.stringify(res));
-        }
-      })
-      .catch((err) => console.log(err))
-      .finally(() => dispatch(hideIsLoading()));
-      // .finally(() => setIsLoading(false));
+          // }
+        })
+        .catch((err) => console.log(err))
+        .finally(() => dispatch(hideIsLoading()));
+    }
   };
 
   // Поиск фильмов по ключевым словам в локальном хранилище
@@ -177,155 +172,78 @@ const App = () => {
     }
   }
 
-  //Регистрация пользователя
-  const handleRegister = (values) => {
-    const { name, email, password } = values;
-    mainApi
-      .register(name, email, password)
-      .then((res) => {
-        if (!res || res.statusCode === 400) {
-          throw new Error({ message: "Не передано одно из полей" });
-        }
-        if (res) {
-          handleLogin(values);
-        }
-      })
-      .catch((err) => {
-        if (err) {
-          handleErrorSubmit();
-          console.log({ message: "Некорректно заполнено одно из полей" });
-        }
-      });
-  };
-  //Авторизация пользователя
-  const handleLogin = (values) => {
-    const { email, password } = values;
-    mainApi
-      .authorization(email, password)
-      .then((res) => {
-        if (!res) {
-          throw new Error({ message: "Не передано одно из полей" });
-        }
-        if (res.token) {
-          localStorage.setItem("jwt", res.token);
-          handleGetUserInfo();
-          setLoggedIn(true);
-          history.push("/movies");
-        }
-      })
-      .catch((err) => {
-        if (err) {
-          handleErrorSubmit();
-          console.log({ message: "Необходимо пройти регистрацию" });
-        }
-      });
-  };
-
   const tokenCheck = () => {
     mainApi.getContent().then((res) => {
       if (res) {
-        handleGetUserInfo();
-        setLoggedIn(true);
-        if (pathname === "/signup" || pathname === "/signin") {
-          return history.push("/");
-        }
-        history.push(`${pathname}`);
+        dispatch(handleGetUserInfo());
+        dispatch(isLoggedInTrue());
+          if (pathname === "/signup" || pathname === "/signin") {
+            return history.push("/");
+          }
+          history.push(`${pathname}`);
       }
     });
   };
-  //Получения данных текущего пользователя
-  const handleGetUserInfo = () => {
-    mainApi
-      .getUserInfo()
-      .then((res) => setCurrentUser(res))
-      .catch(() => console.log("Пользователь не найден"));
-  };
+
   //Фукнция выхода из аккаунта
   const handleSignOut = () => {
     const jwt = localStorage.getItem("jwt");
     if (jwt) {
       localStorage.removeItem("jwt");
-      setLoggedIn(false);
+      localStorage.removeItem("storageMovies");
+      dispatch(isLoggedInFalse());
+      // setLoggedIn(false);
     }
-  };
-  //Обновление данных пользователя
-  const handleUpdateUser = (values) => {
-    const { email, name } = values;
-    mainApi
-      .setUserInfo(email, name)
-      .then((res) => {
-        setCurrentUser(res);
-      })
-      .catch((err) => {
-        if (err) {
-          handleErrorSubmit();
-          console.log({ message: "При обновлении профиля произошла ошибка" });
-        }
-      });
-  };
-
-  const handleErrorSubmit = () => {
-    setErrorSubmit(true);
   };
 
   return (
-    <CurrentUserContext.Provider value={currentUser}>
-      <div className="page">
-        <Switch>
-          <Route exact path="/">
-            <Main loggedIn={loggedIn} />
-          </Route>
-          <ProtectedRoute
-            exact
-            path="/movies"
-            component={Movies}
-            loggedIn={loggedIn}
-            // isLoading={isLoading}
-            movies={movies}
-            onSearchFilms={handleSearchByWord}
-            showMovies={showMovies}
-            setIsShortMovies={setIsShortMovies}
-            isShortMovies={isShortMovies}
-            setShowMovies={setShowMovies}
-            handleLikeClick={handleLikeClick}
-            isSavedMovie={isSavedMovie}
-            isNotFoundSearch={isNotFoundSearch}
-          />
-          <ProtectedRoute
-            exact
-            path="/saved-movies"
-            component={SavedMovies}
-            onSearchFilms={handleSearchByWordSaved}
-            loggedIn={loggedIn}
-            isSavedMovie={isSavedMovie}
-            handleLikeClick={handleLikeClick}
-            isNotFoundSearch={isNotFoundSearch}
-            isShortMovies={isShortMovies}
-            setIsShortMovies={setIsShortMovies}
-            setFilterMovies={setFilterMovies}
-            filterMovies={filterMovies}
-          />
-          <ProtectedRoute
-            exact
-            path="/profile"
-            component={Profile}
-            loggedIn={loggedIn}
-            onSignOut={handleSignOut}
-            onUpdateUser={handleUpdateUser}
-            errorSubmit={errorSubmit}
-          />
-          <Route exact path="/signup">
-            <Register onRegister={handleRegister} errorSubmit={errorSubmit} setErrorSubmit={setErrorSubmit} />
-          </Route>
-          <Route exact path="/signin">
-            <Login onLogin={handleLogin} errorSubmit={errorSubmit} setErrorSubmit={setErrorSubmit} />
-          </Route>
-          <Route path="*">
-            <NotFound />
-          </Route>
-        </Switch>
-      </div>
-    </CurrentUserContext.Provider>
+    <div className="page">
+      <Switch>
+        <Route exact path="/">
+          <Main />
+        </Route>
+        <ProtectedRoute
+          exact
+          path="/movies"
+          component={Movies}
+          loggedIn={loggedIn}
+          movies={movies}
+          onSearchFilms={handleSearchByWord}
+          showMovies={showMovies}
+          setIsShortMovies={setIsShortMovies}
+          isShortMovies={isShortMovies}
+          setShowMovies={setShowMovies}
+          handleLikeClick={handleLikeClick}
+          isSavedMovie={isSavedMovie}
+          isNotFoundSearch={isNotFoundSearch}
+          setIsNotFoundSearch={setIsNotFoundSearch}
+        />
+        <ProtectedRoute
+          exact
+          path="/saved-movies"
+          component={SavedMovies}
+          loggedIn={loggedIn}
+          onSearchFilms={handleSearchByWordSaved}
+          isSavedMovie={isSavedMovie}
+          handleLikeClick={handleLikeClick}
+          isNotFoundSearch={isNotFoundSearch}
+          isShortMovies={isShortMovies}
+          setIsShortMovies={setIsShortMovies}
+          setFilterMovies={setFilterMovies}
+          filterMovies={filterMovies}
+        />
+        <ProtectedRoute exact path="/profile" component={Profile} loggedIn={loggedIn} onSignOut={handleSignOut} />
+        <Route exact path="/signup">
+          <Register />
+        </Route>
+        <Route exact path="/signin">
+          <Login />
+        </Route>
+        <Route path="*">
+          <NotFound />
+        </Route>
+      </Switch>
+    </div>
   );
 };
 

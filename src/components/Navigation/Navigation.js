@@ -4,9 +4,11 @@ import HeaderLogo from "../../images/logo-header.svg";
 import burgerMenuIcon from "../../images/burger-menu-icon.svg";
 import BurgerMenu from "../BurgerMenu/BurgerMenu";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
-const Navigation = (props) => {
-  const { loggedIn } = props;
+const Navigation = () => {
+
+  const loggedIn = useSelector((state) => state.user.isLoggedIn);
 
   const [isBurgerMenu, setIsBurgerMenu] = useState(false);
 
@@ -48,7 +50,7 @@ const Navigation = (props) => {
         })}
       </ul>
       {loggedIn === true && (
-        <div className="navigation__burger " onClick={() => isBurgerMenu === false && setIsBurgerMenu(true)}>
+        <div className="navigation__burger" onClick={() => isBurgerMenu === false && setIsBurgerMenu(true)}>
           <img className="navigation__burger-icon" src={burgerMenuIcon} alt="Иконка бургер-меню" />
           <BurgerMenu isBurgerMenu={isBurgerMenu} setIsBurgerMenu={setIsBurgerMenu} />
         </div>

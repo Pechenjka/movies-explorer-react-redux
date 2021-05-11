@@ -10,8 +10,6 @@ import "./Movies.css";
 
 const Movies = (props) => {
   const {
-    // isLoading,
-    loggedIn,
     onSearchFilms,
     showMovies,
     setIsShortMovies,
@@ -21,22 +19,24 @@ const Movies = (props) => {
     handleLikeClick,
     isSavedMovie,
     isNotFoundSearch,
+    setIsNotFoundSearch,
   } = props;
 
-  const { values, handleChange } = useFormWithValidation();
-
   const loader = useSelector((state) => state.app.isLoading);
+
+  const { values, handleChange } = useFormWithValidation();
 
   //Эффект показывает короткометражные фильмы
   useEffect(() => {
     if (isShortMovies === false) {
-      onSearchFilms(values.name);
+      setIsNotFoundSearch(false);
+      setShowMovies([]);
     }
     if (isShortMovies === true) {
       onSearchFilms(values.name);
     }
     // eslint-disable-next-line
-  }, [isShortMovies]);
+  }, [isShortMovies, values]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -66,7 +66,7 @@ const Movies = (props) => {
 
   return (
     <Fragment>
-      <Header loggedIn={loggedIn} />
+      <Header />
       <div className="movies">
         <SearchForm
           onSubmit={handleSubmit}
@@ -75,7 +75,6 @@ const Movies = (props) => {
           setIsShortMovies={setIsShortMovies}
           isShortMovies={isShortMovies}
         />
-        {/* {isLoading === true ? ( */}
         {loader ? (
           <Preloader />
         ) : (

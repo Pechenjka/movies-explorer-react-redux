@@ -8,12 +8,10 @@ import Promo from "../Promo/Promo";
 import Techs from "../Techs/Techs";
 import "./Main.css";
 
-const Main = (props) => {
-  const { loggedIn } = props;
-
+const Main = () => {
   return (
     <Fragment>
-      <Header loggedIn={loggedIn} />
+      <Header />
       <main className="content">
         <Promo />
         <AboutProject />
