@@ -12,7 +12,7 @@ import mainApi from "../../utils/MainApi";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import moviesApi from "../../utils/MoviesApi";
 import { useDispatch, useSelector } from "react-redux";
-import { handleGetUserInfo, hideIsLoading, isLoggedInFalse, isLoggedInTrue, showIsLoading } from "../../redux/actions";
+import { handleGetUserInfo, hideIsLoading, isLoggedInFalse, isLoggedInTrue, showIsLoading, handleErrorSubmit } from "../../redux/actions";
 
 const App = () => {
   const [movies, setMovies] = useState([]);
@@ -172,6 +172,34 @@ const App = () => {
     }
   }
 
+  // const handleLogin = (values) => {
+  //   const { email, password } = values;
+  //   // const path = history.push("/movies")
+  //   return (dispatch) => {
+  //
+  //     mainApi
+  //       .authorization(email, password)
+  //       .then((res) => {
+  //         if (!res) {
+  //           throw new Error({ message: "Не передано одно из полей" });
+  //         }
+  //         if (res.token) {
+  //           localStorage.setItem("jwt", res.token);
+  //           dispatch(handleGetUserInfo());
+  //           dispatch(isLoggedInTrue())
+  //           history.push("/movies")
+  //         }
+  //       })
+  //       .catch((err) => {
+  //         if (err) {
+  //           dispatch(handleErrorSubmit());
+  //           console.log({ message: "Необходимо пройти регистрацию" });
+  //         }
+  //       });
+  //   };
+  // };
+
+
   const tokenCheck = () => {
     mainApi.getContent().then((res) => {
       if (res) {
@@ -192,7 +220,6 @@ const App = () => {
       localStorage.removeItem("jwt");
       localStorage.removeItem("storageMovies");
       dispatch(isLoggedInFalse());
-      // setLoggedIn(false);
     }
   };
 
@@ -206,8 +233,8 @@ const App = () => {
           exact
           path="/movies"
           component={Movies}
-          loggedIn={loggedIn}
           movies={movies}
+          loggedIn={loggedIn}
           onSearchFilms={handleSearchByWord}
           showMovies={showMovies}
           setIsShortMovies={setIsShortMovies}

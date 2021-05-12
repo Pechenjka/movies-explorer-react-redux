@@ -1,5 +1,4 @@
 import {
-  CREATE_USER,
   CURRENT_USER,
   HIDE_ERROR_SUBMIT,
   HIDE_ISLOADING,
@@ -7,11 +6,9 @@ import {
   IS_LOGGED_IN_TRUE,
   SHOW_ERROR_SUBMIT,
   SHOW_ISLOADING,
-  PATH_MOVIE,
 } from "./types";
 
 import mainApi from "../utils/MainApi";
-import { useHistory } from "react-router-dom";
 
 const showIsLoading = () => {
   return {
@@ -23,27 +20,6 @@ const hideIsLoading = () => {
     type: HIDE_ISLOADING,
   };
 };
-
-// const createUser = () => {
-//   return {
-//     type: CREATE_USER,
-//   };
-// };
-
-// const pathMovie = () => {
-// const history = useHistory()
-//   return {
-//     type: PATH_MOVIE,
-//     payload: history.push("/movies")
-//   };
-// };
-
-// const currentUser = (values) => {
-//   return {
-//     type: CURRENT_USER,
-//     payload: values,
-//   };
-// };
 
 const isLoggedInTrue = () => {
   return {
@@ -73,7 +49,7 @@ const currentUsers = (dataUser) => {
 };
 
 //Регистрация пользователя
-const handleRegister = (values) => {
+const handleRegister = (values, history) => {
   const { name, email, password } = values;
   return (dispatch) => {
     mainApi
@@ -83,15 +59,12 @@ const handleRegister = (values) => {
           throw new Error({ message: "Не передано одно из полей" });
         }
         if (res) {
-          // dispatch(createUser());
-          dispatch(handleLogin(values));
-          //        handleLogin(values);
+          dispatch(handleLogin(values, history));
         }
       })
       .catch((err) => {
         if (err) {
           dispatch(handleErrorSubmit());
-          // handleErrorSubmit();
           console.log({ message: "Некорректно заполнено одно из полей" });
         }
       });
@@ -99,11 +72,9 @@ const handleRegister = (values) => {
 };
 
 //Авторизация пользователя
-const handleLogin = (values) => {
+const handleLogin = (values, history) => {
   const { email, password } = values;
-  // const path = history.push("/movies")
   return (dispatch) => {
-    //const history = useHistory()
     mainApi
       .authorization(email, password)
       .then((res) => {
@@ -112,19 +83,14 @@ const handleLogin = (values) => {
         }
         if (res.token) {
           localStorage.setItem("jwt", res.token);
-          dispatch(isLoggedInTrue());
           dispatch(handleGetUserInfo());
-          // const path = history.push("/movies");
-          // dispatch({ type: PATH_MOVIE, payload: path });
-          //console.log()
-          //dispatch(path)
-         // useHistory().push("/movies");
+          dispatch(isLoggedInTrue())
+          history.push("/movies")
         }
       })
       .catch((err) => {
         if (err) {
           dispatch(handleErrorSubmit());
-          //handleErrorSubmit();
           console.log({ message: "Необходимо пройти регистрацию" });
         }
       });
@@ -144,7 +110,6 @@ const handleGetUserInfo = () => {
 const handleErrorSubmit = () => {
   return (dispatch) => {
     dispatch(showErrorSubmit());
-    //setErrorSubmit(true);
   };
 };
 
@@ -170,6 +135,7 @@ export {
   showIsLoading,
   hideIsLoading,
   handleRegister,
+  handleErrorSubmit,
   handleLogin,
   hideErrorSubmit,
   handleUpdateUser,
@@ -177,5 +143,4 @@ export {
   handleGetUserInfo,
   isLoggedInTrue,
   isLoggedInFalse,
-  //pathMovie,
 };

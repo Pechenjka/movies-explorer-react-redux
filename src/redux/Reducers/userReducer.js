@@ -4,7 +4,6 @@ import {
   IS_LOGGED_IN_TRUE,
   IS_LOGGED_IN_FALSE,
   CURRENT_USER,
-  CREATE_USER,
 } from "../types";
 
 const initialState = {
@@ -17,8 +16,6 @@ const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case CURRENT_USER:
       return { ...state, currentUser: action.payload };
-    // case CREATE_USER:
-    //   return { ...state, currentUser: action.payload };
     case IS_LOGGED_IN_TRUE:
       return { ...state, isLoggedIn: true };
     case IS_LOGGED_IN_FALSE:

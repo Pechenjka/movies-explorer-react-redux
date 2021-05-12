@@ -1,4 +1,4 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, withRouter } from "react-router-dom";
 import "./AuthForm.css";
 import Logo from "../../images/logo-header.svg";
 import { Fragment } from "react";
@@ -102,4 +102,4 @@ const AuthForm = (props) => {
   );
 };
 
-export default AuthForm;
+export default withRouter(AuthForm);

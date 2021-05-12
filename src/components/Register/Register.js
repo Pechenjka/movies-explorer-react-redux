@@ -6,15 +6,13 @@ import { handleRegister } from "../../redux/actions";
 import { useHistory } from "react-router-dom";
 
 const Register = () => {
-  const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
   const dispatch = useDispatch();
   const history = useHistory();
+  const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    dispatch(handleRegister(values));
-    history.push("/movies");
-    // onRegister(values);
+    dispatch(handleRegister(values, history));
   };
 
   useEffect(() => {
@@ -34,8 +32,6 @@ const Register = () => {
       onChange={handleChange}
       errors={errors}
       isValid={isValid}
-      // errorSubmit={errorSubmit}
-      // setErrorSubmit={setErrorSubmit}
     />
   );
 };
