@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import "./MoviesCard.css";
+import {useSelector} from "react-redux";
 
 const MoviesCard = (props) => {
-  const { item, isSaved, handleLikeClick, isSavedMovie } = props;
+  const { item, isSaved, handleLikeClick } = props;
+  const isSavedMovie = useSelector(state => state.movie.savedMovies)
   const [isSavedMovieButton, setIsSavedMovieButton] = useState(false);
 
   const handleSavedMovieClick = () => {

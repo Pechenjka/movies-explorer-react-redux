@@ -4,7 +4,7 @@ import {
   HIDE_ISLOADING,
   IS_LOGGED_IN_FALSE,
   IS_LOGGED_IN_TRUE,
-  SHOW_ERROR_SUBMIT,
+  SHOW_ERROR_SUBMIT, SHOW_IS_SAVED_MOVIES,
   SHOW_ISLOADING,
 } from "./types";
 
@@ -41,12 +41,19 @@ const hideErrorSubmit = () => {
     type: HIDE_ERROR_SUBMIT,
   };
 };
-const currentUsers = (dataUser) => {
+const currentUser = (dataUser) => {
   return {
     type: CURRENT_USER,
     payload: dataUser,
   };
 };
+
+const showIsSavedMovies = (dataMovies) => {
+  return {
+    type: SHOW_IS_SAVED_MOVIES,
+    payload: dataMovies,
+  }
+}
 
 //Регистрация пользователя
 const handleRegister = (values, history) => {
@@ -101,7 +108,7 @@ const handleGetUserInfo = () => {
   return (dispatch) => {
     mainApi
       .getUserInfo()
-      .then((res) => dispatch(currentUsers(res)))
+      .then((res) => dispatch(currentUser(res)))
       .catch(() => console.log("Пользователь не найден"));
   };
 };
@@ -119,12 +126,11 @@ const handleUpdateUser = (values) => {
     mainApi
       .setUserInfo(email, name)
       .then((res) => {
-        dispatch(currentUsers(res));
+        dispatch(currentUser(res));
       })
       .catch((err) => {
         if (err) {
           dispatch(handleErrorSubmit());
-          //  handleErrorSubmit();
           console.log({ message: "При обновлении профиля произошла ошибка" });
         }
       });
@@ -132,6 +138,7 @@ const handleUpdateUser = (values) => {
 };
 
 export {
+  showIsSavedMovies,
   showIsLoading,
   hideIsLoading,
   handleRegister,
@@ -139,7 +146,7 @@ export {
   handleLogin,
   hideErrorSubmit,
   handleUpdateUser,
-  currentUsers,
+  currentUser,
   handleGetUserInfo,
   isLoggedInTrue,
   isLoggedInFalse,

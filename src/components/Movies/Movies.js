@@ -17,7 +17,6 @@ const Movies = (props) => {
     setShowMovies,
     movies,
     handleLikeClick,
-    isSavedMovie,
     isNotFoundSearch,
     setIsNotFoundSearch,
   } = props;
@@ -82,7 +81,6 @@ const Movies = (props) => {
             showMovies={showMovies}
             movies={movies}
             handleLikeClick={handleLikeClick}
-            isSavedMovie={isSavedMovie}
             isNotFoundSearch={isNotFoundSearch}
           />
         )}

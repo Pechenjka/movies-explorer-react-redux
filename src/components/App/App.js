@@ -10,9 +10,10 @@ import Login from "../Login/Login";
 import Profile from "../Profile/Profile";
 import mainApi from "../../utils/MainApi";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
-import moviesApi from "../../utils/MoviesApi";
+//import moviesApi from "../../utils/MoviesApi";
 import { useDispatch, useSelector } from "react-redux";
 import { handleGetUserInfo, hideIsLoading, isLoggedInFalse, isLoggedInTrue, showIsLoading, handleErrorSubmit } from "../../redux/actions";
+import {getMovies, handleGetSavedMovies} from "../../redux/Actions/moviesActions";
 
 const App = () => {
   const [movies, setMovies] = useState([]);
@@ -27,7 +28,7 @@ const App = () => {
   const history = useHistory();
 
   const loggedIn = useSelector((state) => state.user.isLoggedIn);
-
+const savedMovies = useSelector(state => state.movie.savedMovies)
   useEffect(() => {
     const jwt = localStorage.getItem("jwt");
     if (jwt) {
@@ -38,43 +39,46 @@ const App = () => {
 
   useEffect(() => {
     if (loggedIn) {
-      getMovies();
-      handleGetSavedMovies();
+      dispatch(getMovies());
+      dispatch(handleGetSavedMovies());
     }
   }, [loggedIn]);
 
+ //  useEffect(() => {
+ //    if (savedMovies) {
+ //      dispatch(handleGetSavedMovies());
+ //    }
+ // }, [savedMovies]);
   //Сохранение массива фильмов из внешнего API в локальное хранилище
-  const getMovies = () => {
-    if (!localStorage.getItem("storageMovies")) {
-      dispatch(showIsLoading());
-      return moviesApi
-        .searchFilms()
-        .then((res) => {
-          return res.map((item) => {
-            return {
-              country: item.country || "",
-              director: item.director || "",
-              duration: item.duration || "",
-              year: item.year || "",
-              description: item.description || "",
-              image: !item.image ? "" : `https://api.nomoreparties.co${item.image.url}`,
-              trailer: item.trailerLink,
-              thumbnail: !item.image ? "" : `https://api.nomoreparties.co${item.image.formats.thumbnail.url}`,
-              movieId: item.id || "",
-              nameRU: item.nameRU || "",
-              nameEN: item.nameEN || "",
-            };
-          });
-        })
-        .then((res) => {
-          // if (res) {
-          localStorage.setItem("storageMovies", JSON.stringify(res));
-          // }
-        })
-        .catch((err) => console.log(err))
-        .finally(() => dispatch(hideIsLoading()));
-    }
-  };
+  // const getMovies = () => {
+  //   if (!localStorage.getItem("storageMovies")) {
+  //     dispatch(showIsLoading());
+  //     return moviesApi
+  //       .searchFilms()
+  //       .then((res) => {
+  //         return res.map((item) => {
+  //           return {
+  //             country: item.country || "",
+  //             director: item.director || "",
+  //             duration: item.duration || "",
+  //             year: item.year || "",
+  //             description: item.description || "",
+  //             image: !item.image ? "" : `https://api.nomoreparties.co${item.image.url}`,
+  //             trailer: item.trailerLink,
+  //             thumbnail: !item.image ? "" : `https://api.nomoreparties.co${item.image.formats.thumbnail.url}`,
+  //             movieId: item.id || "",
+  //             nameRU: item.nameRU || "",
+  //             nameEN: item.nameEN || "",
+  //           };
+  //         });
+  //       })
+  //       .then((res) => {
+  //         localStorage.setItem("storageMovies", JSON.stringify(res));
+  //       })
+  //       .catch((err) => console.log(err))
+  //       .finally(() => dispatch(hideIsLoading()));
+  //   }
+  // };
 
   // Поиск фильмов по ключевым словам в локальном хранилище
   const handleSearchByWord = (word) => {
@@ -123,16 +127,16 @@ const App = () => {
   };
 
   //Отображение сохраненных фильмов
-  const handleGetSavedMovies = () => {
-    mainApi
-      .getSavedMovies()
-      .then((res) => {
-        if (res) {
-          setIsSavedMovie(res);
-        }
-      })
-      .catch((err) => console.log(err));
-  };
+  // const handleGetSavedMovies = () => {
+  //   mainApi
+  //     .getSavedMovies()
+  //     .then((res) => {
+  //       if (res) {
+  //         setIsSavedMovie(res);
+  //       }
+  //     })
+  //     .catch((err) => console.log(err));
+  // };
 
   //Функция сохранения и удаления фильмов
   function handleLikeClick(data) {
@@ -241,7 +245,6 @@ const App = () => {
           isShortMovies={isShortMovies}
           setShowMovies={setShowMovies}
           handleLikeClick={handleLikeClick}
-          isSavedMovie={isSavedMovie}
           isNotFoundSearch={isNotFoundSearch}
           setIsNotFoundSearch={setIsNotFoundSearch}
         />
@@ -251,7 +254,6 @@ const App = () => {
           component={SavedMovies}
           loggedIn={loggedIn}
           onSearchFilms={handleSearchByWordSaved}
-          isSavedMovie={isSavedMovie}
           handleLikeClick={handleLikeClick}
           isNotFoundSearch={isNotFoundSearch}
           isShortMovies={isShortMovies}

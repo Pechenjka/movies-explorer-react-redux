@@ -6,7 +6,6 @@ const MoviesCardList = (props) => {
     showMovies,
     isSaved,
     handleLikeClick,
-    isSavedMovie,
     isNotFoundSearch,
   } = props;
 
@@ -23,7 +22,6 @@ const MoviesCardList = (props) => {
                 item={item}
                 isSaved={isSaved}
                 handleLikeClick={handleLikeClick}
-                isSavedMovie={isSavedMovie}
               />
             );
           })}

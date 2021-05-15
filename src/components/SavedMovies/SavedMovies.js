@@ -5,10 +5,10 @@ import SearchForm from "../SearchForm/SearchForm";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import useFormWithValidation from "../../hooks/useForm";
+import { useSelector} from "react-redux";
 
 const SavedMovies = (props) => {
   const {
-    isSavedMovie,
     onSearchFilms,
     handleLikeClick,
     isNotFoundSearch,
@@ -18,8 +18,8 @@ const SavedMovies = (props) => {
     setFilterMovies,
   } = props;
 
+  const isSavedMovie = useSelector((state => state.movie.savedMovies))
   const [isSaved, setIsSaved] = useState(false);
-
   const { values, handleChange } = useFormWithValidation();
 
   useEffect(() => {
@@ -49,7 +49,6 @@ const SavedMovies = (props) => {
     onSearchFilms(values.name);
   };
 
-
   return (
     <Fragment>
       <Header />
@@ -66,7 +65,6 @@ const SavedMovies = (props) => {
           showMovies={filterMovies}
           isSaved={isSaved}
           handleLikeClick={handleLikeClick}
-          isSavedMovie={isSavedMovie}
           isNotFoundSearch={isNotFoundSearch}
         />
       </section>
