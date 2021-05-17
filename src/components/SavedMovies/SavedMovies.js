@@ -20,6 +20,7 @@ const SavedMovies = () => {
   useEffect(() => {
     dispatch(isShortMoviesFalse());
     setIsSaved(true);
+    // eslint-disable-next-line
   }, []);
 
   //Эффект показывает короткометражные фильмы

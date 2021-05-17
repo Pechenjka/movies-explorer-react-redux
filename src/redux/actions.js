@@ -14,7 +14,7 @@ import {
   IS_SHORT_MOVIES_TRUE,
   IS_SHORT_MOVIES_FALSE,
   SHOW_IS_NOT_FOUND_SEARCH,
-  HIDE_IS_NOT_FOUND_SEARCH,
+  HIDE_IS_NOT_FOUND_SEARCH, SHOW_IS_EDIT_PROFILE, HIDE_IS_EDIT_PROFILE,
 } from "./types";
 
 import mainApi from "../utils/MainApi";
@@ -56,6 +56,20 @@ const currentUser = (dataUser) => {
     payload: dataUser,
   };
 };
+
+const showIsEditProfile = () => {
+  return {
+    type: SHOW_IS_EDIT_PROFILE,
+  }
+}
+
+const hideIsEditProfile = () => {
+  return {
+    type: HIDE_IS_EDIT_PROFILE,
+  }
+}
+
+
 
 const savedMoviesAction = (dataMovie) => {
   return {
@@ -187,6 +201,7 @@ const handleUpdateUser = (values) => {
       .setUserInfo(email, name)
       .then((res) => {
         dispatch(currentUser(res));
+        dispatch(hideIsEditProfile())
       })
       .catch((err) => {
         if (err) {
@@ -218,4 +233,6 @@ export {
   isShortMoviesFalse,
   hideIsNotFoundSearch,
   showIsNotFoundSearch,
+  hideIsEditProfile,
+  showIsEditProfile,
 };

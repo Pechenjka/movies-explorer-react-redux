@@ -1,30 +1,26 @@
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect } from "react";
 import { Link } from "react-router-dom";
 import useFormWithValidation from "../../hooks/useForm";
 import Header from "../Header/Header";
 import "./Profile.css";
 import { useDispatch, useSelector } from "react-redux";
-import { handleUpdateUser } from "../../redux/actions";
+import {handleUpdateUser, showIsEditProfile} from "../../redux/actions";
 
 const Profile = (props) => {
-  const { onSignOut, errorSubmit } = props;
+  const { onSignOut } = props;
 
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.user.currentUser);
-
-  console.log(currentUser)
-
-  const [isEditProfile, setIsEditProfile] = useState(false);
+  const errorSubmit = useSelector((state) => state.user.errorSubmit);
+  const isEditProfile = useSelector((state) => state.user.isEditProfile);
 
   const { values, errors, isValid, handleChange, resetForm } = useFormWithValidation();
 
   const isDisabledInput = isEditProfile === false && "disabled";
 
-
   const handleSubmit = (event) => {
     event.preventDefault();
     dispatch(handleUpdateUser(values));
-    //onUpdateUser(values);
   };
 
   useEffect(() => {
@@ -87,7 +83,7 @@ const Profile = (props) => {
             </Fragment>
           ) : (
             <Fragment>
-              <button className="profile__form_button" onClick={() => setIsEditProfile(true)}>
+              <button className="profile__form_button" onClick={() => dispatch(showIsEditProfile())}>
                 Редактировать
               </button>
               <Link to="/" className="profile__form_link" onClick={onSignOut}>

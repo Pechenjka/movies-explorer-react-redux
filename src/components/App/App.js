@@ -1,5 +1,5 @@
 import { Switch, Route, useHistory, useLocation } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import "./App.css";
 import Main from "../Main/Main";
 import Movies from "../Movies/Movies";
@@ -11,15 +11,10 @@ import Profile from "../Profile/Profile";
 import mainApi from "../../utils/MainApi";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  handleGetUserInfo,
-  isLoggedInFalse,
-  isLoggedInTrue,
-} from "../../redux/actions";
+import { handleGetUserInfo, isLoggedInFalse, isLoggedInTrue } from "../../redux/actions";
 import { getMovies, handleGetSavedMovies } from "../../redux/Actions/moviesActions";
 
 const App = () => {
-  const [isNotFoundSearch, setIsNotFoundSearch] = useState(false);
   const { pathname } = useLocation();
   const dispatch = useDispatch();
   const history = useHistory();
@@ -38,8 +33,7 @@ const App = () => {
       dispatch(getMovies());
       dispatch(handleGetSavedMovies());
     }
-  }, [loggedIn]);
-
+  }, [dispatch, loggedIn]);
 
   const tokenCheck = () => {
     mainApi.getContent().then((res) => {
@@ -70,18 +64,8 @@ const App = () => {
         <Route exact path="/">
           <Main />
         </Route>
-        <ProtectedRoute
-          exact
-          path="/movies"
-          component={Movies}
-          loggedIn={loggedIn}
-        />
-        <ProtectedRoute
-          exact
-          path="/saved-movies"
-          component={SavedMovies}
-          loggedIn={loggedIn}
-        />
+        <ProtectedRoute exact path="/movies" component={Movies} loggedIn={loggedIn} />
+        <ProtectedRoute exact path="/saved-movies" component={SavedMovies} loggedIn={loggedIn} />
         <ProtectedRoute exact path="/profile" component={Profile} loggedIn={loggedIn} onSignOut={handleSignOut} />
         <Route exact path="/signup">
           <Register />
