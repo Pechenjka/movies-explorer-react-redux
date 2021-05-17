@@ -8,7 +8,13 @@ import {
   SAVED_MOVIES,
   SHOW_ISLOADING,
   DELETED_MOVIES,
-  MOVIES, SHOW_SEARCH_MOVIES, SHOW_SEARCH_SAVED_MOVIES, IS_SHORT_MOVIES_TRUE, IS_SHORT_MOVIES_FALSE,
+  MOVIES,
+  SHOW_SEARCH_MOVIES,
+  SHOW_SEARCH_SAVED_MOVIES,
+  IS_SHORT_MOVIES_TRUE,
+  IS_SHORT_MOVIES_FALSE,
+  SHOW_IS_NOT_FOUND_SEARCH,
+  HIDE_IS_NOT_FOUND_SEARCH,
 } from "./types";
 
 import mainApi from "../utils/MainApi";
@@ -75,28 +81,40 @@ const moviesAction = (dataMovie) => {
 const showMoviesAction = (dataMovies) => {
   return {
     type: SHOW_SEARCH_MOVIES,
-    payload: dataMovies
-  }
-}
+    payload: dataMovies,
+  };
+};
 
 const showSearchSavedMoviesAction = (dataMovies) => {
   return {
     type: SHOW_SEARCH_SAVED_MOVIES,
-    payload: dataMovies
-  }
-}
+    payload: dataMovies,
+  };
+};
 
 const isShortMoviesTrue = () => {
   return {
-    type: IS_SHORT_MOVIES_TRUE
-  }
-}
+    type: IS_SHORT_MOVIES_TRUE,
+  };
+};
+
 const isShortMoviesFalse = () => {
   return {
-    type: IS_SHORT_MOVIES_FALSE
-  }
-}
+    type: IS_SHORT_MOVIES_FALSE,
+  };
+};
 
+const showIsNotFoundSearch = () => {
+  return {
+    type: SHOW_IS_NOT_FOUND_SEARCH,
+  };
+};
+
+const hideIsNotFoundSearch = () => {
+  return {
+    type: HIDE_IS_NOT_FOUND_SEARCH,
+  };
+};
 
 //Регистрация пользователя
 const handleRegister = (values, history) => {
@@ -197,5 +215,7 @@ export {
   showMoviesAction,
   showSearchSavedMoviesAction,
   isShortMoviesTrue,
-  isShortMoviesFalse
+  isShortMoviesFalse,
+  hideIsNotFoundSearch,
+  showIsNotFoundSearch,
 };

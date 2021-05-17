@@ -7,10 +7,9 @@ import Footer from "../Footer/Footer";
 import useFormWithValidation from "../../hooks/useForm";
 import { useDispatch, useSelector } from "react-redux";
 import { handleSearchByWordSaved } from "../../redux/Actions/moviesActions";
-import { showSearchSavedMoviesAction, isShortMoviesFalse } from "../../redux/actions";
+import { showSearchSavedMoviesAction, isShortMoviesFalse, hideIsNotFoundSearch } from "../../redux/actions";
 
-const SavedMovies = (props) => {
-  const { isNotFoundSearch } = props;
+const SavedMovies = () => {
   const dispatch = useDispatch();
   const isSavedMovie = useSelector((state) => state.movie.savedMovies);
   const showSearchSavedMovies = useSelector((state) => state.movie.showSearchSavedMovies);
@@ -27,7 +26,9 @@ const SavedMovies = (props) => {
   useEffect(() => {
     if (isShortMovies === false || values.name === "") {
       dispatch(showSearchSavedMoviesAction(isSavedMovie));
-    } else if (isShortMovies === true && values.name) {
+      dispatch(hideIsNotFoundSearch());
+    }
+    if (isShortMovies === true && values.name) {
       dispatch(handleSearchByWordSaved(values.name, isShortMovies, isSavedMovie));
     }
     // eslint-disable-next-line
@@ -43,7 +44,7 @@ const SavedMovies = (props) => {
       <Header />
       <section className="savedMovies">
         <SearchForm onSubmit={handleSubmit} values={values} handleChange={handleChange} isSaved={isSaved} />
-        <MoviesCardList showMovies={showSearchSavedMovies} isSaved={isSaved} isNotFoundSearch={isNotFoundSearch} />
+        <MoviesCardList showMovies={showSearchSavedMovies} isSaved={isSaved}  />
       </section>
       <Footer />
     </Fragment>

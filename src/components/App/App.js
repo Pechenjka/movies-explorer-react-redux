@@ -20,13 +20,11 @@ import { getMovies, handleGetSavedMovies } from "../../redux/Actions/moviesActio
 
 const App = () => {
   const [isNotFoundSearch, setIsNotFoundSearch] = useState(false);
-
   const { pathname } = useLocation();
   const dispatch = useDispatch();
   const history = useHistory();
-
   const loggedIn = useSelector((state) => state.user.isLoggedIn);
-  //const savedMovies = useSelector((state) => state.movie.savedMovies);
+
   useEffect(() => {
     const jwt = localStorage.getItem("jwt");
     if (jwt) {
@@ -77,15 +75,12 @@ const App = () => {
           path="/movies"
           component={Movies}
           loggedIn={loggedIn}
-          isNotFoundSearch={isNotFoundSearch}
-          setIsNotFoundSearch={setIsNotFoundSearch}
         />
         <ProtectedRoute
           exact
           path="/saved-movies"
           component={SavedMovies}
           loggedIn={loggedIn}
-          isNotFoundSearch={isNotFoundSearch}
         />
         <ProtectedRoute exact path="/profile" component={Profile} loggedIn={loggedIn} onSignOut={handleSignOut} />
         <Route exact path="/signup">

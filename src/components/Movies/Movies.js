@@ -1,5 +1,5 @@
 import { Fragment, useEffect } from "react";
-import {useDispatch, useSelector} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import useFormWithValidation from "../../hooks/useForm";
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
@@ -7,16 +7,11 @@ import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import Preloader from "../Preloader/Preloader";
 import SearchForm from "../SearchForm/SearchForm";
 import "./Movies.css";
-import {handleSearchByWord} from "../../redux/Actions/moviesActions";
-import {isShortMoviesFalse, showMoviesAction} from "../../redux/actions";
+import { handleSearchByWord } from "../../redux/Actions/moviesActions";
+import { isShortMoviesFalse, hideIsNotFoundSearch, showMoviesAction } from "../../redux/actions";
 
-const Movies = (props) => {
-  const {
-    isNotFoundSearch,
-    setIsNotFoundSearch,
-  } = props;
-
-  const dispatch =useDispatch()
+const Movies = () => {
+  const dispatch = useDispatch();
   const loader = useSelector((state) => state.app.isLoading);
   const movies = useSelector((state) => state.movie.movies);
   const showMovies = useSelector((state) => state.movie.showSearchMovies);
@@ -25,29 +20,27 @@ const Movies = (props) => {
   const { values, handleChange } = useFormWithValidation();
 
   useEffect(() => {
-    dispatch(isShortMoviesFalse())
+    dispatch(isShortMoviesFalse());
     // eslint-disable-next-line
   }, [isShortMoviesFalse]);
 
   //Эффект показывает короткометражные фильмы
   useEffect(() => {
     if (isShortMovies === false) {
-      setIsNotFoundSearch(false);
-      dispatch(showMoviesAction([]))
+      dispatch(hideIsNotFoundSearch());
+      dispatch(showMoviesAction([]));
     }
     if (isShortMovies === true) {
-      console.log(isShortMovies)
-      dispatch(handleSearchByWord(values.name, isShortMovies))
+      console.log(isShortMovies);
+      dispatch(handleSearchByWord(values.name, isShortMovies));
     }
     // eslint-disable-next-line
   }, [isShortMovies, values]);
 
-
   const handleSubmit = (event) => {
     event.preventDefault();
-    dispatch(handleSearchByWord(values.name, isShortMovies))
+    dispatch(handleSearchByWord(values.name, isShortMovies));
   };
-
 
   //Показывать дополнительные фильмы кликом по кнопке
   const handleAddMovies = (dataMovies) => {
@@ -60,7 +53,7 @@ const Movies = (props) => {
   };
 
   const handleChangeAddMovies = () => {
-      dispatch(showMoviesAction(handleAddMovies(showMovies)))
+    dispatch(showMoviesAction(handleAddMovies(showMovies)));
   };
 
   const hiddenButton =
@@ -72,19 +65,8 @@ const Movies = (props) => {
     <Fragment>
       <Header />
       <div className="movies">
-        <SearchForm
-          onSubmit={handleSubmit}
-          values={values}
-          handleChange={handleChange}
-        />
-        {loader ? (
-          <Preloader />
-        ) : (
-          <MoviesCardList
-            showMovies={showMovies}
-            isNotFoundSearch={isNotFoundSearch}
-          />
-        )}
+        <SearchForm onSubmit={handleSubmit} values={values} handleChange={handleChange} />
+        {loader ? <Preloader /> : <MoviesCardList showMovies={showMovies} />}
         <button className={`movies__button ${hiddenButton}`} onClick={handleChangeAddMovies}>
           Еще
         </button>

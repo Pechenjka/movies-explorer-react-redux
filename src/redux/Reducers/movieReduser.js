@@ -4,7 +4,10 @@ import {
   MOVIES,
   SAVED_MOVIES,
   SHOW_SEARCH_MOVIES,
-  IS_SHORT_MOVIES_TRUE, IS_SHORT_MOVIES_FALSE,
+  IS_SHORT_MOVIES_TRUE,
+  IS_SHORT_MOVIES_FALSE,
+  SHOW_IS_NOT_FOUND_SEARCH,
+  HIDE_IS_NOT_FOUND_SEARCH,
 } from "../types";
 
 const initialState = {
@@ -13,6 +16,7 @@ const initialState = {
   showSearchMovies: [],
   showSearchSavedMovies: [],
   isShortMovies: false,
+  isNotFoundSearch: false,
 };
 
 const movieReducer = (state = initialState, action) => {
@@ -31,6 +35,10 @@ const movieReducer = (state = initialState, action) => {
       return { ...state, isShortMovies: true };
     case IS_SHORT_MOVIES_FALSE:
       return { ...state, isShortMovies: false };
+    case SHOW_IS_NOT_FOUND_SEARCH:
+      return { ...state, isNotFoundSearch: true };
+    case HIDE_IS_NOT_FOUND_SEARCH:
+      return { ...state, isNotFoundSearch: false };
     default:
       return state;
   }

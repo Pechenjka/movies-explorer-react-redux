@@ -1,12 +1,10 @@
 import MoviesCard from "../MoviesCard/MoviesCard";
 import "./MoviesCardList.css";
+import { useSelector } from "react-redux";
 
 const MoviesCardList = (props) => {
-  const {
-    showMovies,
-    isSaved,
-    isNotFoundSearch,
-  } = props;
+  const { showMovies, isSaved } = props;
+  const isNotFoundSearch = useSelector((state) => state.movie.isNotFoundSearch);
 
   return (
     <section className="moviesCardList">
@@ -15,13 +13,7 @@ const MoviesCardList = (props) => {
       ) : (
         <ul className="moviesCardList__container">
           {showMovies.map((item) => {
-            return (
-              <MoviesCard
-                key={item.movieId}
-                item={item}
-                isSaved={isSaved}
-              />
-            );
+            return <MoviesCard key={item.movieId} item={item} isSaved={isSaved} />;
           })}
         </ul>
       )}

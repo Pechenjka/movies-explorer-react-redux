@@ -5,7 +5,7 @@ import {
   showIsLoading,
   savedMoviesAction,
   showMoviesAction,
-  showSearchSavedMoviesAction,
+  showSearchSavedMoviesAction, showIsNotFoundSearch,
 } from "../actions";
 import moviesApi from "../../utils/MoviesApi";
 import mainApi from "../../utils/MainApi";
@@ -105,7 +105,7 @@ const handleSearchByWord = (word, isShortMovies) => {
     });
     dispatch(moviesAction(searchByWords));
     dispatch(showMoviesAction(handleSearchFilms(searchByWords)));
-    //setIsNotFoundSearch(true);
+    dispatch(showIsNotFoundSearch())
   };
 };
 
@@ -119,7 +119,7 @@ const handleSearchByWordSaved = (word, isShortMovies, isSavedMovie) => {
       return item.nameRU.toLowerCase().includes(word.toLowerCase());
     });
     dispatch(showSearchSavedMoviesAction(handleSearchFilms(searchByWords)));
-    //setIsNotFoundSearch(true);
+    dispatch(showIsNotFoundSearch())
   };
 };
 
