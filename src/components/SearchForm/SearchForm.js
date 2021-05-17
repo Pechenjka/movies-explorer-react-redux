@@ -3,7 +3,7 @@ import logoSearch from "../../images/logo-search.svg";
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 
 const SearchForm = (props) => {
-  const { onSubmit, handleChange, values, setIsShortMovies, isShortMovies } = props;
+  const { onSubmit, handleChange, values } = props;
 
   return (
     <section className="searchForm">
@@ -23,7 +23,7 @@ const SearchForm = (props) => {
             <img src={logoSearch} alt="лого поиска" />
           </button>
         </fieldset>
-        <FilterCheckbox setIsShortMovies={setIsShortMovies} isShortMovies={isShortMovies} />
+        <FilterCheckbox />
       </form>
     </section>
   );

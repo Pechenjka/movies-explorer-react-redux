@@ -4,8 +4,11 @@ import {
   HIDE_ISLOADING,
   IS_LOGGED_IN_FALSE,
   IS_LOGGED_IN_TRUE,
-  SHOW_ERROR_SUBMIT, SHOW_IS_SAVED_MOVIES,
+  SHOW_ERROR_SUBMIT,
+  SAVED_MOVIES,
   SHOW_ISLOADING,
+  DELETED_MOVIES,
+  MOVIES, SHOW_SEARCH_MOVIES, SHOW_SEARCH_SAVED_MOVIES, IS_SHORT_MOVIES_TRUE, IS_SHORT_MOVIES_FALSE,
 } from "./types";
 
 import mainApi from "../utils/MainApi";
@@ -48,12 +51,52 @@ const currentUser = (dataUser) => {
   };
 };
 
-const showIsSavedMovies = (dataMovies) => {
+const savedMoviesAction = (dataMovie) => {
   return {
-    type: SHOW_IS_SAVED_MOVIES,
-    payload: dataMovies,
+    type: SAVED_MOVIES,
+    payload: dataMovie,
+  };
+};
+
+const deletedMovies = (dataMovie) => {
+  return {
+    type: DELETED_MOVIES,
+    payload: dataMovie,
+  };
+};
+
+const moviesAction = (dataMovie) => {
+  return {
+    type: MOVIES,
+    payload: dataMovie,
+  };
+};
+
+const showMoviesAction = (dataMovies) => {
+  return {
+    type: SHOW_SEARCH_MOVIES,
+    payload: dataMovies
   }
 }
+
+const showSearchSavedMoviesAction = (dataMovies) => {
+  return {
+    type: SHOW_SEARCH_SAVED_MOVIES,
+    payload: dataMovies
+  }
+}
+
+const isShortMoviesTrue = () => {
+  return {
+    type: IS_SHORT_MOVIES_TRUE
+  }
+}
+const isShortMoviesFalse = () => {
+  return {
+    type: IS_SHORT_MOVIES_FALSE
+  }
+}
+
 
 //Регистрация пользователя
 const handleRegister = (values, history) => {
@@ -91,8 +134,8 @@ const handleLogin = (values, history) => {
         if (res.token) {
           localStorage.setItem("jwt", res.token);
           dispatch(handleGetUserInfo());
-          dispatch(isLoggedInTrue())
-          history.push("/movies")
+          dispatch(isLoggedInTrue());
+          history.push("/movies");
         }
       })
       .catch((err) => {
@@ -112,7 +155,6 @@ const handleGetUserInfo = () => {
       .catch(() => console.log("Пользователь не найден"));
   };
 };
-
 
 const handleErrorSubmit = () => {
   return (dispatch) => {
@@ -138,7 +180,8 @@ const handleUpdateUser = (values) => {
 };
 
 export {
-  showIsSavedMovies,
+  savedMoviesAction,
+  deletedMovies,
   showIsLoading,
   hideIsLoading,
   handleRegister,
@@ -150,4 +193,9 @@ export {
   handleGetUserInfo,
   isLoggedInTrue,
   isLoggedInFalse,
+  moviesAction,
+  showMoviesAction,
+  showSearchSavedMoviesAction,
+  isShortMoviesTrue,
+  isShortMoviesFalse
 };

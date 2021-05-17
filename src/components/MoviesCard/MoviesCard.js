@@ -1,14 +1,18 @@
 import { useEffect, useState } from "react";
 import "./MoviesCard.css";
-import {useSelector} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { handleLikeClick } from "../../redux/Actions/moviesActions";
 
 const MoviesCard = (props) => {
-  const { item, isSaved, handleLikeClick } = props;
-  const isSavedMovie = useSelector(state => state.movie.savedMovies)
+  const { item, isSaved } = props;
+  const isSavedMovie = useSelector((state) => state.movie.savedMovies);
+
   const [isSavedMovieButton, setIsSavedMovieButton] = useState(false);
+  const dispatch = useDispatch();
 
   const handleSavedMovieClick = () => {
-    handleLikeClick(item);
+    dispatch(handleLikeClick(item, isSavedMovie));
+    //handleLikeClick(item);
     setIsSavedMovieButton(!isSavedMovieButton);
   };
 
@@ -37,7 +41,8 @@ const MoviesCard = (props) => {
       <div className="card_descripton-container">
         <p className="card__title">{item.nameRU}</p>
         <p className="card__duration">{getTime(item.duration)}</p>
-        <button className={saved} onClick={handleSavedMovieClick}></button>
+        <button className={saved} onClick={handleSavedMovieClick} />
+        {/*<button className={saved} onClick={handleSavedMovieClick}></button>*/}
       </div>
       <a href={item.trailer} target="_blanck">
         <img className="card__movie" src={item.image} alt="постер" />

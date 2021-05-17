@@ -1,5 +1,5 @@
 import { Fragment, useEffect } from "react";
-import { useSelector } from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import useFormWithValidation from "../../hooks/useForm";
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
@@ -7,55 +7,60 @@ import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import Preloader from "../Preloader/Preloader";
 import SearchForm from "../SearchForm/SearchForm";
 import "./Movies.css";
+import {handleSearchByWord} from "../../redux/Actions/moviesActions";
+import {isShortMoviesFalse, showMoviesAction} from "../../redux/actions";
 
 const Movies = (props) => {
   const {
-    onSearchFilms,
-    showMovies,
-    setIsShortMovies,
-    isShortMovies,
-    setShowMovies,
-    movies,
-    handleLikeClick,
     isNotFoundSearch,
     setIsNotFoundSearch,
   } = props;
 
+  const dispatch =useDispatch()
   const loader = useSelector((state) => state.app.isLoading);
+  const movies = useSelector((state) => state.movie.movies);
+  const showMovies = useSelector((state) => state.movie.showSearchMovies);
+  const isShortMovies = useSelector((state) => state.movie.isShortMovies);
 
   const { values, handleChange } = useFormWithValidation();
+
+  useEffect(() => {
+    dispatch(isShortMoviesFalse())
+    // eslint-disable-next-line
+  }, [isShortMoviesFalse]);
 
   //Эффект показывает короткометражные фильмы
   useEffect(() => {
     if (isShortMovies === false) {
       setIsNotFoundSearch(false);
-      setShowMovies([]);
+      dispatch(showMoviesAction([]))
     }
     if (isShortMovies === true) {
-      onSearchFilms(values.name);
+      console.log(isShortMovies)
+      dispatch(handleSearchByWord(values.name, isShortMovies))
     }
     // eslint-disable-next-line
   }, [isShortMovies, values]);
 
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    onSearchFilms(values.name);
+    dispatch(handleSearchByWord(values.name, isShortMovies))
   };
 
+
   //Показывать дополнительные фильмы кликом по кнопке
-  const handleAddMovies = () => {
+  const handleAddMovies = (dataMovies) => {
     if (window.innerWidth >= 1280) {
-      const addMoviesMaxWidth = movies.slice(0, showMovies.length + 3);
-      return addMoviesMaxWidth;
+      return movies.slice(0, dataMovies.length + 3);
     }
     if (window.innerWidth >= 320) {
-      const addMoviesMinWidth = movies.slice(0, showMovies.length + 2);
-      return addMoviesMinWidth;
+      return movies.slice(0, dataMovies.length + 2);
     }
   };
 
   const handleChangeAddMovies = () => {
-    setShowMovies(handleAddMovies);
+      dispatch(showMoviesAction(handleAddMovies(showMovies)))
   };
 
   const hiddenButton =
@@ -71,16 +76,12 @@ const Movies = (props) => {
           onSubmit={handleSubmit}
           values={values}
           handleChange={handleChange}
-          setIsShortMovies={setIsShortMovies}
-          isShortMovies={isShortMovies}
         />
         {loader ? (
           <Preloader />
         ) : (
           <MoviesCardList
             showMovies={showMovies}
-            movies={movies}
-            handleLikeClick={handleLikeClick}
             isNotFoundSearch={isNotFoundSearch}
           />
         )}
