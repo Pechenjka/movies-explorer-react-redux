@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import useFormWithValidation from "../../hooks/useForm";
 import AuthForm from "../AuthForm/AuthForm";
 import { useDispatch } from "react-redux";
-import { handleLogin } from "../../redux/actions";
+import { handleLogin } from "../../redux/Actions/userActions";
 import { useHistory } from "react-router-dom";
 
 const Login = () => {

@@ -1,6 +1,6 @@
 import "./FilterCheckbox.css";
 import { useDispatch, useSelector } from "react-redux";
-import { isShortMoviesFalse, isShortMoviesTrue } from "../../redux/actions";
+import { isShortMoviesFalse, isShortMoviesTrue } from "../../redux/Actions/moviesActions";
 
 const FilterCheckbox = () => {
   const dispatch = useDispatch();

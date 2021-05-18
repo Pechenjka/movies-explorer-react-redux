@@ -4,7 +4,7 @@ import useFormWithValidation from "../../hooks/useForm";
 import Header from "../Header/Header";
 import "./Profile.css";
 import { useDispatch, useSelector } from "react-redux";
-import {handleUpdateUser, showIsEditProfile} from "../../redux/actions";
+import {handleUpdateUser, showIsEditProfile} from "../../redux/Actions/userActions";
 
 const Profile = (props) => {
   const { onSignOut } = props;

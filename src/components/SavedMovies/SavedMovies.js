@@ -7,7 +7,7 @@ import Footer from "../Footer/Footer";
 import useFormWithValidation from "../../hooks/useForm";
 import { useDispatch, useSelector } from "react-redux";
 import { handleSearchByWordSaved } from "../../redux/Actions/moviesActions";
-import { showSearchSavedMoviesAction, isShortMoviesFalse, hideIsNotFoundSearch } from "../../redux/actions";
+import { showSearchSavedMoviesAction, isShortMoviesFalse, hideIsNotFoundSearch } from "../../redux/Actions/moviesActions";
 
 const SavedMovies = () => {
   const dispatch = useDispatch();

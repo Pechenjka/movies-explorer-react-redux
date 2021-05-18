@@ -3,7 +3,7 @@ import "./AuthForm.css";
 import Logo from "../../images/logo-header.svg";
 import { Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { hideErrorSubmit } from "../../redux/actions";
+import { hideErrorSubmit } from "../../redux/Actions/userActions";
 
 const AuthForm = (props) => {
   const {

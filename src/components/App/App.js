@@ -11,7 +11,7 @@ import Profile from "../Profile/Profile";
 import mainApi from "../../utils/MainApi";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import { useDispatch, useSelector } from "react-redux";
-import { handleGetUserInfo, isLoggedInFalse, isLoggedInTrue } from "../../redux/actions";
+import { handleGetUserInfo, isLoggedInFalse, isLoggedInTrue } from "../../redux/Actions/userActions";
 import { getMovies, handleGetSavedMovies } from "../../redux/Actions/moviesActions";
 
 const App = () => {

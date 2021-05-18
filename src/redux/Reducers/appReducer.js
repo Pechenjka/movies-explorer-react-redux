@@ -1,4 +1,4 @@
-import { HIDE_ISLOADING, SHOW_ISLOADING } from "../types";
+import { HIDE_IS_LOADING, SHOW_IS_LOADING } from "../types";
 
 const initialState = {
   isLoading: false,
@@ -6,9 +6,9 @@ const initialState = {
 
 const appReducer = (state = initialState, action) => {
   switch (action.type) {
-    case SHOW_ISLOADING:
+    case SHOW_IS_LOADING:
       return { ...state, isLoading: true}
-      case HIDE_ISLOADING:
+      case HIDE_IS_LOADING:
         return { ...state, isLoading: false}
     default:
       return state;

@@ -1,32 +1,24 @@
 import {
   CURRENT_USER,
   HIDE_ERROR_SUBMIT,
-  HIDE_ISLOADING,
+  HIDE_IS_LOADING,
   IS_LOGGED_IN_FALSE,
   IS_LOGGED_IN_TRUE,
   SHOW_ERROR_SUBMIT,
-  SAVED_MOVIES,
-  SHOW_ISLOADING,
-  DELETED_MOVIES,
-  MOVIES,
-  SHOW_SEARCH_MOVIES,
-  SHOW_SEARCH_SAVED_MOVIES,
-  IS_SHORT_MOVIES_TRUE,
-  IS_SHORT_MOVIES_FALSE,
-  SHOW_IS_NOT_FOUND_SEARCH,
-  HIDE_IS_NOT_FOUND_SEARCH, SHOW_IS_EDIT_PROFILE, HIDE_IS_EDIT_PROFILE,
-} from "./types";
+  SHOW_IS_LOADING,
+  SHOW_IS_EDIT_PROFILE, HIDE_IS_EDIT_PROFILE,
+} from "../types";
 
-import mainApi from "../utils/MainApi";
+import mainApi from "../../utils/MainApi";
 
 const showIsLoading = () => {
   return {
-    type: SHOW_ISLOADING,
+    type: SHOW_IS_LOADING,
   };
 };
 const hideIsLoading = () => {
   return {
-    type: HIDE_ISLOADING,
+    type: HIDE_IS_LOADING,
   };
 };
 
@@ -69,66 +61,6 @@ const hideIsEditProfile = () => {
   }
 }
 
-
-
-const savedMoviesAction = (dataMovie) => {
-  return {
-    type: SAVED_MOVIES,
-    payload: dataMovie,
-  };
-};
-
-const deletedMovies = (dataMovie) => {
-  return {
-    type: DELETED_MOVIES,
-    payload: dataMovie,
-  };
-};
-
-const moviesAction = (dataMovie) => {
-  return {
-    type: MOVIES,
-    payload: dataMovie,
-  };
-};
-
-const showMoviesAction = (dataMovies) => {
-  return {
-    type: SHOW_SEARCH_MOVIES,
-    payload: dataMovies,
-  };
-};
-
-const showSearchSavedMoviesAction = (dataMovies) => {
-  return {
-    type: SHOW_SEARCH_SAVED_MOVIES,
-    payload: dataMovies,
-  };
-};
-
-const isShortMoviesTrue = () => {
-  return {
-    type: IS_SHORT_MOVIES_TRUE,
-  };
-};
-
-const isShortMoviesFalse = () => {
-  return {
-    type: IS_SHORT_MOVIES_FALSE,
-  };
-};
-
-const showIsNotFoundSearch = () => {
-  return {
-    type: SHOW_IS_NOT_FOUND_SEARCH,
-  };
-};
-
-const hideIsNotFoundSearch = () => {
-  return {
-    type: HIDE_IS_NOT_FOUND_SEARCH,
-  };
-};
 
 //Регистрация пользователя
 const handleRegister = (values, history) => {
@@ -213,8 +145,6 @@ const handleUpdateUser = (values) => {
 };
 
 export {
-  savedMoviesAction,
-  deletedMovies,
   showIsLoading,
   hideIsLoading,
   handleRegister,
@@ -226,13 +156,6 @@ export {
   handleGetUserInfo,
   isLoggedInTrue,
   isLoggedInFalse,
-  moviesAction,
-  showMoviesAction,
-  showSearchSavedMoviesAction,
-  isShortMoviesTrue,
-  isShortMoviesFalse,
-  hideIsNotFoundSearch,
-  showIsNotFoundSearch,
   hideIsEditProfile,
   showIsEditProfile,
 };

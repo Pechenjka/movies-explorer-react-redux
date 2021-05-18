@@ -1,14 +1,76 @@
-import {
-  deletedMovies,
-  hideIsLoading,
-  moviesAction,
-  showIsLoading,
-  savedMoviesAction,
-  showMoviesAction,
-  showSearchSavedMoviesAction, showIsNotFoundSearch,
-} from "../actions";
+import { hideIsLoading, showIsLoading } from "./userActions";
 import moviesApi from "../../utils/MoviesApi";
 import mainApi from "../../utils/MainApi";
+import {
+  DELETED_MOVIES,
+  HIDE_IS_NOT_FOUND_SEARCH,
+  IS_SHORT_MOVIES_FALSE,
+  IS_SHORT_MOVIES_TRUE,
+  MOVIES,
+  SAVED_MOVIES,
+  SHOW_IS_NOT_FOUND_SEARCH,
+  SHOW_SEARCH_MOVIES,
+  SHOW_SEARCH_SAVED_MOVIES,
+} from "../types";
+
+const savedMoviesAction = (dataMovie) => {
+  return {
+    type: SAVED_MOVIES,
+    payload: dataMovie,
+  };
+};
+
+const deletedMovies = (dataMovie) => {
+  return {
+    type: DELETED_MOVIES,
+    payload: dataMovie,
+  };
+};
+
+const moviesAction = (dataMovie) => {
+  return {
+    type: MOVIES,
+    payload: dataMovie,
+  };
+};
+
+const showMoviesAction = (dataMovies) => {
+  return {
+    type: SHOW_SEARCH_MOVIES,
+    payload: dataMovies,
+  };
+};
+
+const showSearchSavedMoviesAction = (dataMovies) => {
+  return {
+    type: SHOW_SEARCH_SAVED_MOVIES,
+    payload: dataMovies,
+  };
+};
+
+const isShortMoviesTrue = () => {
+  return {
+    type: IS_SHORT_MOVIES_TRUE,
+  };
+};
+
+const isShortMoviesFalse = () => {
+  return {
+    type: IS_SHORT_MOVIES_FALSE,
+  };
+};
+
+const showIsNotFoundSearch = () => {
+  return {
+    type: SHOW_IS_NOT_FOUND_SEARCH,
+  };
+};
+
+const hideIsNotFoundSearch = () => {
+  return {
+    type: HIDE_IS_NOT_FOUND_SEARCH,
+  };
+};
 
 //Сохранение массива фильмов из внешнего API в локальное хранилище
 const getMovies = () => {
@@ -86,7 +148,6 @@ const handleGetSavedMovies = () => {
     return mainApi
       .getSavedMovies()
       .then((res) => {
-        console.log(res);
         dispatch(savedMoviesAction(res));
       })
       .catch((err) => console.log(err));
@@ -105,7 +166,7 @@ const handleSearchByWord = (word, isShortMovies) => {
     });
     dispatch(moviesAction(searchByWords));
     dispatch(showMoviesAction(handleSearchFilms(searchByWords)));
-    dispatch(showIsNotFoundSearch())
+    dispatch(showIsNotFoundSearch());
   };
 };
 
@@ -119,7 +180,7 @@ const handleSearchByWordSaved = (word, isShortMovies, isSavedMovie) => {
       return item.nameRU.toLowerCase().includes(word.toLowerCase());
     });
     dispatch(showSearchSavedMoviesAction(handleSearchFilms(searchByWords)));
-    dispatch(showIsNotFoundSearch())
+    dispatch(showIsNotFoundSearch());
   };
 };
 
@@ -129,7 +190,6 @@ const handleSearchFilms = (searchByWords) => {
     return searchByWords.slice(0, 12);
   }
   if (window.innerWidth >= 768) {
-    console.log(searchByWords);
     return searchByWords.slice(0, 8);
   }
   if (window.innerWidth >= 320) {
@@ -137,4 +197,16 @@ const handleSearchFilms = (searchByWords) => {
   }
 };
 
-export { getMovies, handleGetSavedMovies, handleLikeClick, handleSearchByWord, handleSearchByWordSaved };
+export {
+  getMovies,
+  handleGetSavedMovies,
+  handleLikeClick,
+  handleSearchByWord,
+  handleSearchByWordSaved,
+  isShortMoviesTrue,
+  isShortMoviesFalse,
+  hideIsNotFoundSearch,
+  savedMoviesAction,
+  showSearchSavedMoviesAction,
+  showMoviesAction,
+};

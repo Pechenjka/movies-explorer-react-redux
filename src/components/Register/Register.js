@@ -2,7 +2,7 @@ import AuthForm from "../AuthForm/AuthForm";
 import useFormWithValidation from "../../hooks/useForm";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { handleRegister } from "../../redux/actions";
+import { handleRegister } from "../../redux/Actions/userActions";
 import { useHistory } from "react-router-dom";
 
 const Register = () => {

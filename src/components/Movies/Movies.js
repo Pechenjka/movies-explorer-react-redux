@@ -8,7 +8,7 @@ import Preloader from "../Preloader/Preloader";
 import SearchForm from "../SearchForm/SearchForm";
 import "./Movies.css";
 import { handleSearchByWord } from "../../redux/Actions/moviesActions";
-import { isShortMoviesFalse, hideIsNotFoundSearch, showMoviesAction } from "../../redux/actions";
+import { isShortMoviesFalse, hideIsNotFoundSearch, showMoviesAction } from "../../redux/Actions/moviesActions";
 
 const Movies = () => {
   const dispatch = useDispatch();
@@ -31,7 +31,6 @@ const Movies = () => {
       dispatch(showMoviesAction([]));
     }
     if (isShortMovies === true) {
-      console.log(isShortMovies);
       dispatch(handleSearchByWord(values.name, isShortMovies));
     }
     // eslint-disable-next-line
