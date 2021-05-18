@@ -7,7 +7,7 @@ import Footer from "../Footer/Footer";
 import useFormWithValidation from "../../hooks/useForm";
 import { useDispatch, useSelector } from "react-redux";
 import { handleSearchByWordSaved } from "../../redux/Actions/moviesActions";
-import { showSearchSavedMoviesAction, isShortMoviesFalse, hideIsNotFoundSearch } from "../../redux/actions";
+import { showSearchSavedMoviesAction, isShortMoviesFalse, hideIsNotFoundSearch } from "../../redux/Actions/moviesActions";
 
 const SavedMovies = () => {
   const dispatch = useDispatch();
@@ -17,13 +17,14 @@ const SavedMovies = () => {
   const [isSaved, setIsSaved] = useState(false);
   const { values, handleChange } = useFormWithValidation();
 
+//Выключить чекбокс при переходе не страницу saved-movies
   useEffect(() => {
     dispatch(isShortMoviesFalse());
     setIsSaved(true);
     // eslint-disable-next-line
   }, []);
 
-  //Эффект показывает короткометражные фильмы
+  //Показывать короткометражные фильмы
   useEffect(() => {
     if (isShortMovies === false || values.name === "") {
       dispatch(showSearchSavedMoviesAction(isSavedMovie));

@@ -1,34 +1,13 @@
 import {
   CURRENT_USER,
   HIDE_ERROR_SUBMIT,
-  HIDE_ISLOADING,
   IS_LOGGED_IN_FALSE,
   IS_LOGGED_IN_TRUE,
   SHOW_ERROR_SUBMIT,
-  SAVED_MOVIES,
-  SHOW_ISLOADING,
-  DELETED_MOVIES,
-  MOVIES,
-  SHOW_SEARCH_MOVIES,
-  SHOW_SEARCH_SAVED_MOVIES,
-  IS_SHORT_MOVIES_TRUE,
-  IS_SHORT_MOVIES_FALSE,
-  SHOW_IS_NOT_FOUND_SEARCH,
-  HIDE_IS_NOT_FOUND_SEARCH, SHOW_IS_EDIT_PROFILE, HIDE_IS_EDIT_PROFILE,
-} from "./types";
+  SHOW_IS_EDIT_PROFILE, HIDE_IS_EDIT_PROFILE,
+} from "../types";
 
-import mainApi from "../utils/MainApi";
-
-const showIsLoading = () => {
-  return {
-    type: SHOW_ISLOADING,
-  };
-};
-const hideIsLoading = () => {
-  return {
-    type: HIDE_ISLOADING,
-  };
-};
+import mainApi from "../../utils/MainApi";
 
 const isLoggedInTrue = () => {
   return {
@@ -69,66 +48,6 @@ const hideIsEditProfile = () => {
   }
 }
 
-
-
-const savedMoviesAction = (dataMovie) => {
-  return {
-    type: SAVED_MOVIES,
-    payload: dataMovie,
-  };
-};
-
-const deletedMovies = (dataMovie) => {
-  return {
-    type: DELETED_MOVIES,
-    payload: dataMovie,
-  };
-};
-
-const moviesAction = (dataMovie) => {
-  return {
-    type: MOVIES,
-    payload: dataMovie,
-  };
-};
-
-const showMoviesAction = (dataMovies) => {
-  return {
-    type: SHOW_SEARCH_MOVIES,
-    payload: dataMovies,
-  };
-};
-
-const showSearchSavedMoviesAction = (dataMovies) => {
-  return {
-    type: SHOW_SEARCH_SAVED_MOVIES,
-    payload: dataMovies,
-  };
-};
-
-const isShortMoviesTrue = () => {
-  return {
-    type: IS_SHORT_MOVIES_TRUE,
-  };
-};
-
-const isShortMoviesFalse = () => {
-  return {
-    type: IS_SHORT_MOVIES_FALSE,
-  };
-};
-
-const showIsNotFoundSearch = () => {
-  return {
-    type: SHOW_IS_NOT_FOUND_SEARCH,
-  };
-};
-
-const hideIsNotFoundSearch = () => {
-  return {
-    type: HIDE_IS_NOT_FOUND_SEARCH,
-  };
-};
 
 //Регистрация пользователя
 const handleRegister = (values, history) => {
@@ -179,6 +98,7 @@ const handleLogin = (values, history) => {
   };
 };
 
+//Получение данных текущего пользователя
 const handleGetUserInfo = () => {
   return (dispatch) => {
     mainApi
@@ -205,7 +125,7 @@ const handleUpdateUser = (values) => {
       })
       .catch((err) => {
         if (err) {
-          dispatch(handleErrorSubmit());
+         dispatch(handleErrorSubmit());
           console.log({ message: "При обновлении профиля произошла ошибка" });
         }
       });
@@ -213,10 +133,6 @@ const handleUpdateUser = (values) => {
 };
 
 export {
-  savedMoviesAction,
-  deletedMovies,
-  showIsLoading,
-  hideIsLoading,
   handleRegister,
   handleErrorSubmit,
   handleLogin,
@@ -226,13 +142,6 @@ export {
   handleGetUserInfo,
   isLoggedInTrue,
   isLoggedInFalse,
-  moviesAction,
-  showMoviesAction,
-  showSearchSavedMoviesAction,
-  isShortMoviesTrue,
-  isShortMoviesFalse,
-  hideIsNotFoundSearch,
-  showIsNotFoundSearch,
   hideIsEditProfile,
   showIsEditProfile,
 };

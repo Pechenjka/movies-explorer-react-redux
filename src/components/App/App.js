@@ -11,7 +11,7 @@ import Profile from "../Profile/Profile";
 import mainApi from "../../utils/MainApi";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import { useDispatch, useSelector } from "react-redux";
-import { handleGetUserInfo, isLoggedInFalse, isLoggedInTrue } from "../../redux/actions";
+import { handleGetUserInfo, isLoggedInFalse, isLoggedInTrue } from "../../redux/Actions/userActions";
 import { getMovies, handleGetSavedMovies } from "../../redux/Actions/moviesActions";
 
 const App = () => {
@@ -19,6 +19,7 @@ const App = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const loggedIn = useSelector((state) => state.user.isLoggedIn);
+
 
   useEffect(() => {
     const jwt = localStorage.getItem("jwt");
@@ -28,6 +29,7 @@ const App = () => {
     // eslint-disable-next-line
   }, []);
 
+  //Получение массива фильмов и отображение сохраненных фильмов
   useEffect(() => {
     if (loggedIn) {
       dispatch(getMovies());
@@ -35,6 +37,7 @@ const App = () => {
     }
   }, [dispatch, loggedIn]);
 
+  //Проверка токена пользователя при посещении сайта
   const tokenCheck = () => {
     mainApi.getContent().then((res) => {
       if (res) {
