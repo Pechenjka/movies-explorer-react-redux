@@ -3,9 +3,9 @@ import linkIcon from "../../images/link-icon.svg";
 
 const Portfolio = () => {
   const linksPortfolio = [
-    { name: "Статичный сайт", link: "https://github.com/PetyaLobachev/how-to-learn", id: "1" },
-    { name: "Адаптивный сайт", link: "https://github.com/PetyaLobachev/russian-travel", id: "2" },
-    { name: "Одностраничное приложение", link: "https://lobachev.students.nomoreparties.space/", id: "3" },
+    { name: "Статичный сайт", link: "https://pechenjka.github.io/how-to-learn/", id: "1" },
+    { name: "Адаптивный сайт", link: "https://pechenjka.github.io/russian-travel/", id: "2" },
+    { name: "Одностраничное приложение", link: "https://pechenjka.github.io/mesto/", id: "3" },
   ];
 
   return (
