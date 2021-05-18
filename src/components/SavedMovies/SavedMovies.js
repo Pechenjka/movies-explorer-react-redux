@@ -17,13 +17,14 @@ const SavedMovies = () => {
   const [isSaved, setIsSaved] = useState(false);
   const { values, handleChange } = useFormWithValidation();
 
+//Выключить чекбокс при переходе не страницу saved-movies
   useEffect(() => {
     dispatch(isShortMoviesFalse());
     setIsSaved(true);
     // eslint-disable-next-line
   }, []);
 
-  //Эффект показывает короткометражные фильмы
+  //Показывать короткометражные фильмы
   useEffect(() => {
     if (isShortMovies === false || values.name === "") {
       dispatch(showSearchSavedMoviesAction(isSavedMovie));

@@ -19,12 +19,13 @@ const Movies = () => {
 
   const { values, handleChange } = useFormWithValidation();
 
+  //Выключить чекбокс при переходе не страницу movies
   useEffect(() => {
     dispatch(isShortMoviesFalse());
     // eslint-disable-next-line
   }, [isShortMoviesFalse]);
 
-  //Эффект показывает короткометражные фильмы
+  //Показывать короткометражные фильмы
   useEffect(() => {
     if (isShortMovies === false) {
       dispatch(hideIsNotFoundSearch());

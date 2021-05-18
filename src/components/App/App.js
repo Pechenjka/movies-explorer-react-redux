@@ -20,6 +20,7 @@ const App = () => {
   const history = useHistory();
   const loggedIn = useSelector((state) => state.user.isLoggedIn);
 
+
   useEffect(() => {
     const jwt = localStorage.getItem("jwt");
     if (jwt) {
@@ -28,6 +29,7 @@ const App = () => {
     // eslint-disable-next-line
   }, []);
 
+  //Получение массива фильмов и отображение сохраненных фильмов
   useEffect(() => {
     if (loggedIn) {
       dispatch(getMovies());
@@ -35,6 +37,7 @@ const App = () => {
     }
   }, [dispatch, loggedIn]);
 
+  //Проверка токена пользователя при посещении сайта
   const tokenCheck = () => {
     mainApi.getContent().then((res) => {
       if (res) {

@@ -1,8 +1,12 @@
 import { NavLink } from "react-router-dom";
 import "./BurgerMenu.css";
+import { useDispatch, useSelector } from "react-redux";
+import { hideBurgerMenuAction } from "../../redux/Actions/appActions";
 
-const BurgerMenu = (props) => {
-  const { isBurgerMenu, setIsBurgerMenu } = props;
+const BurgerMenu = () => {
+  const dispatch = useDispatch();
+  const isBurgerMenu = useSelector((state) => state.app.isBurgerMenu);
+
   const BurgerMenuLinks = [
     { name: "Главная", path: "/", id: "1" },
     { name: "Фильмы", path: "/movies", id: "2" },
@@ -17,9 +21,12 @@ const BurgerMenu = (props) => {
       <button
         className="burgerMenu__button_close"
         type="button"
-        onClick={() => isBurgerMenu === true && setIsBurgerMenu(false)}
-      ></button>
-      <ul className="burgerMenu__list-container" onClick={() => isBurgerMenu === true && setIsBurgerMenu(false)}>
+        onClick={() => isBurgerMenu === true && dispatch(hideBurgerMenuAction())}
+      />
+      <ul
+        className="burgerMenu__list-container"
+        onClick={() => isBurgerMenu === true && dispatch(hideBurgerMenuAction())}
+      >
         {BurgerMenuLinks.map((item) => {
           return (
             <li className="burgerMenu__links-container" key={item.id} onClick={(e) => e.stopPropagation()}>

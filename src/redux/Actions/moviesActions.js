@@ -1,4 +1,4 @@
-import { hideIsLoading, showIsLoading } from "./userActions";
+import { hideIsLoading, showIsLoading } from "./appActions";
 import moviesApi from "../../utils/MoviesApi";
 import mainApi from "../../utils/MainApi";
 import {
@@ -170,7 +170,7 @@ const handleSearchByWord = (word, isShortMovies) => {
   };
 };
 
-// Поиск фильмов по ключевым словам в сохраненных фильмов
+// Поиск фильмов по ключевым словам в сохраненных фильмах
 const handleSearchByWordSaved = (word, isShortMovies, isSavedMovie) => {
   return (dispatch) => {
     const searchByWords = isSavedMovie.filter((item) => {

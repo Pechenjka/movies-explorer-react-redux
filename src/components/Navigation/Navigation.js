@@ -3,14 +3,13 @@ import "./Navigation.css";
 import HeaderLogo from "../../images/logo-header.svg";
 import burgerMenuIcon from "../../images/burger-menu-icon.svg";
 import BurgerMenu from "../BurgerMenu/BurgerMenu";
-import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { showBurgerMenuAction } from "../../redux/Actions/appActions";
 
 const Navigation = () => {
-
+  const dispatch = useDispatch();
   const loggedIn = useSelector((state) => state.user.isLoggedIn);
-
-  const [isBurgerMenu, setIsBurgerMenu] = useState(false);
+  const isBurgerMenu = useSelector((state) => state.app.isBurgerMenu);
 
   const itemsNavigation = [
     { name: "Регистрация", path: "/signup", id: "1" },
@@ -50,9 +49,9 @@ const Navigation = () => {
         })}
       </ul>
       {loggedIn === true && (
-        <div className="navigation__burger" onClick={() => isBurgerMenu === false && setIsBurgerMenu(true)}>
+        <div className="navigation__burger" onClick={() => isBurgerMenu === false && dispatch(showBurgerMenuAction())}>
           <img className="navigation__burger-icon" src={burgerMenuIcon} alt="Иконка бургер-меню" />
-          <BurgerMenu isBurgerMenu={isBurgerMenu} setIsBurgerMenu={setIsBurgerMenu} />
+          <BurgerMenu />
         </div>
       )}
     </nav>

@@ -1,26 +1,13 @@
 import {
   CURRENT_USER,
   HIDE_ERROR_SUBMIT,
-  HIDE_IS_LOADING,
   IS_LOGGED_IN_FALSE,
   IS_LOGGED_IN_TRUE,
   SHOW_ERROR_SUBMIT,
-  SHOW_IS_LOADING,
   SHOW_IS_EDIT_PROFILE, HIDE_IS_EDIT_PROFILE,
 } from "../types";
 
 import mainApi from "../../utils/MainApi";
-
-const showIsLoading = () => {
-  return {
-    type: SHOW_IS_LOADING,
-  };
-};
-const hideIsLoading = () => {
-  return {
-    type: HIDE_IS_LOADING,
-  };
-};
 
 const isLoggedInTrue = () => {
   return {
@@ -111,6 +98,7 @@ const handleLogin = (values, history) => {
   };
 };
 
+//Получение данных текущего пользователя
 const handleGetUserInfo = () => {
   return (dispatch) => {
     mainApi
@@ -137,7 +125,7 @@ const handleUpdateUser = (values) => {
       })
       .catch((err) => {
         if (err) {
-          dispatch(handleErrorSubmit());
+         dispatch(handleErrorSubmit());
           console.log({ message: "При обновлении профиля произошла ошибка" });
         }
       });
@@ -145,8 +133,6 @@ const handleUpdateUser = (values) => {
 };
 
 export {
-  showIsLoading,
-  hideIsLoading,
   handleRegister,
   handleErrorSubmit,
   handleLogin,
