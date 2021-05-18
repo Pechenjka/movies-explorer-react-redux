@@ -4,7 +4,7 @@ import "./Footer.css";
 const Footer = () => {
   const links = [
     { id: "1", name: "Яндекс.Практикум", path: "https://praktikum.yandex.ru/", classeslink: "links__link_footer", classesListContainer: "links__list-container_footer" },
-    { id: "2", name: "Github", path: "https://github.com/PetyaLobachev", classeslink: "links__link_footer", classesListContainer: "links__list-container_footer" },
+    { id: "2", name: "Github", path: "https://github.com/Pechenjka", classeslink: "links__link_footer", classesListContainer: "links__list-container_footer" },
     { id: "3", name: "Vk", path: "https://vk.com/pe4enjkka", classeslink: "links__link_footer", classesListContainer: "links__list-container_footer"},
   ];
   return (
