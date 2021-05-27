@@ -6,7 +6,7 @@
 
 Сервис поиска фильмов по ключевым словам. С возможностью сохранения фильмов. Реализована регистрация и авторизация пользователя.
 
-Сайт: http://www.movies.redux.students.nomoredomains.rocks/
+Сайт: https://www.movies.redux.students.nomoredomains.rocks/
 
 Макет проекта: https://www.figma.com/file/kc6ExrMXSfqNHWaHsTqpS8/Diploma?node-id=932%3A4182&viewport=-18265%2C47%2C1.0743353366851807
 
