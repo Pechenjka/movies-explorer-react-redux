@@ -1,5 +1,4 @@
 import "./SearchForm.css";
-import logoSearch from "../../images/logo-search.svg";
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 
 const SearchForm = (props) => {
@@ -19,9 +18,7 @@ const SearchForm = (props) => {
             value={values.name || ""}
             onChange={handleChange}
           />
-          <button className="searchForm__button" type="submit">
-            <img src={logoSearch} alt="лого поиска" />
-          </button>
+          <button className="searchForm__button" type="submit"/>
         </fieldset>
         <FilterCheckbox />
       </form>
