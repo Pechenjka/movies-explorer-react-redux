@@ -38,7 +38,7 @@ const MoviesCard = (props) => {
 
   return (
     <li className="card">
-      <div className="card_descripton-container">
+      <div className="card__description-container">
         <p className="card__title">{item.nameRU}</p>
         <p className="card__duration">{getTime(item.duration)}</p>
         <button className={saved} onClick={handleSavedMovieClick} />

@@ -3,7 +3,7 @@
   height: 271px;
 }
 
-.card_descripton-container {
+.card__description-container {
   height: 68px;
   display: flex;
   flex-direction: column;
