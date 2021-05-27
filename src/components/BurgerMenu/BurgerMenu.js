@@ -35,6 +35,7 @@ const BurgerMenu = () => {
                 activeClassName="burgerMenu__link-current-address"
                 exact
                 to={item.path}
+                onClick={() => dispatch(hideBurgerMenuAction())}
               >
                 {item.name}
               </NavLink>

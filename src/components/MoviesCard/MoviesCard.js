@@ -12,7 +12,6 @@ const MoviesCard = (props) => {
 
   const handleSavedMovieClick = () => {
     dispatch(handleLikeClick(item, isSavedMovie));
-    //handleLikeClick(item);
     setIsSavedMovieButton(!isSavedMovieButton);
   };
 
@@ -42,7 +41,6 @@ const MoviesCard = (props) => {
         <p className="card__title">{item.nameRU}</p>
         <p className="card__duration">{getTime(item.duration)}</p>
         <button className={saved} onClick={handleSavedMovieClick} />
-        {/*<button className={saved} onClick={handleSavedMovieClick}></button>*/}
       </div>
       <a href={item.trailer} target="_blanck">
         <img className="card__movie" src={item.image} alt="постер" />
