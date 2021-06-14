@@ -9,7 +9,6 @@
 /* Переключатель - коробка вокруг ползунка */
 .filterCheckbox__input-switch {
   position: relative;
-  display: inline-block;
   width: 36px;
   height: 20px;
   font-style: normal;

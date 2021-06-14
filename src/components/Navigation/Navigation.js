@@ -25,7 +25,7 @@ const Navigation = () => {
     loggedIn === true ? "navigation__link-container_auth" : ""
   } `;
 
-  const listlinksUnACtive = loggedIn === true ? "navigation__list-links_unActive" : "";
+  const listLinksUnActive = loggedIn === true ? "navigation__list-links_unActive" : "";
 
   return (
     <nav className="navigation">
@@ -33,7 +33,7 @@ const Navigation = () => {
         <img className="navigation__logo" src={HeaderLogo} alt="лого" />
       </Link>
 
-      <ul className={`navigation__list-links ${listlinksUnACtive}`}>
+      <ul className={`navigation__list-links ${listLinksUnActive}`}>
         {(loggedIn === true ? AuthNavigation : itemsNavigation).map((item) => {
           return (
             <li className={classesLinkContainer} key={item.id}>

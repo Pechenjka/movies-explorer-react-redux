@@ -34,6 +34,9 @@
   outline: none;
   width: 34px;
   height: 34px;
+  background-image: url("../../images/logo-search.svg");
+  background-repeat: no-repeat;
+  background-position: center;
   background-color: rgba(66, 133, 244, 1);
   border-radius: 48px;
   cursor: pointer;
