@@ -10,6 +10,7 @@ import "./Movies.css";
 import { handleSearchByWord } from "../../redux/Actions/moviesActions";
 import { isShortMoviesFalse, hideIsNotFoundSearch, showMoviesAction } from "../../redux/Actions/moviesActions";
 
+
 const Movies = () => {
   const dispatch = useDispatch();
   const loader = useSelector((state) => state.app.isLoading);

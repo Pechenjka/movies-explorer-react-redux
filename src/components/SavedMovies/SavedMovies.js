@@ -8,12 +8,14 @@ import useFormWithValidation from "../../hooks/useForm";
 import { useDispatch, useSelector } from "react-redux";
 import { handleSearchByWordSaved } from "../../redux/Actions/moviesActions";
 import { showSearchSavedMoviesAction, isShortMoviesFalse, hideIsNotFoundSearch } from "../../redux/Actions/moviesActions";
+import Preloader from "../Preloader/Preloader";
 
 const SavedMovies = () => {
   const dispatch = useDispatch();
   const isSavedMovie = useSelector((state) => state.movie.savedMovies);
   const showSearchSavedMovies = useSelector((state) => state.movie.showSearchSavedMovies);
   const isShortMovies = useSelector((state) => state.movie.isShortMovies);
+  const loader = useSelector((state) => state.app.isLoading);
   const [isSaved, setIsSaved] = useState(false);
   const { values, handleChange } = useFormWithValidation();
 
@@ -46,7 +48,7 @@ const SavedMovies = () => {
       <Header />
       <section className="savedMovies">
         <SearchForm onSubmit={handleSubmit} values={values} handleChange={handleChange} isSaved={isSaved} />
-        <MoviesCardList showMovies={showSearchSavedMovies} isSaved={isSaved}  />
+        {loader ? <Preloader/> : <MoviesCardList showMovies={showSearchSavedMovies} isSaved={isSaved}  />}
       </section>
       <Footer />
     </Fragment>
