@@ -81,6 +81,7 @@ const getMovies = () => {
         .searchFilms()
         .then((res) => {
           return res.map((item) => {
+            console.log(item);
             return {
               country: item.country || "",
               director: item.director || "",
@@ -157,30 +158,54 @@ const handleGetSavedMovies = () => {
 // Поиск фильмов по ключевым словам в локальном хранилище
 const handleSearchByWord = (word, isShortMovies) => {
   return (dispatch) => {
-    const storageMovies = JSON.parse(localStorage.getItem("storageMovies"));
-    const searchByWords = storageMovies.filter((item) => {
-      if (isShortMovies) {
-        return item.duration <= 40 && item.nameRU.toLowerCase().includes(word.toLowerCase());
-      }
-      return item.nameRU.toLowerCase().includes(word.toLowerCase());
+    dispatch(showIsLoading());
+    let getPromiseSearchMovies = new Promise((resolve, reject) => {
+      const storageMovies = JSON.parse(localStorage.getItem("storageMovies"));
+      resolve(
+        storageMovies.filter((item) => {
+          if (isShortMovies) {
+            return item.duration <= 40 && item.nameRU.toLowerCase().includes(word.toLowerCase());
+          }
+          return item.nameRU.toLowerCase().includes(word.toLowerCase());
+        })
+      );
     });
-    dispatch(moviesAction(searchByWords));
-    dispatch(showMoviesAction(handleSearchFilms(searchByWords)));
-    dispatch(showIsNotFoundSearch());
+    setTimeout(() => {
+      getPromiseSearchMovies
+        .then((searchByWords) => {
+          dispatch(moviesAction(searchByWords));
+          dispatch(showMoviesAction(handleSearchFilms(searchByWords)));
+          dispatch(showIsNotFoundSearch());
+        })
+        .catch((err) => console.log(err))
+        .finally(() => dispatch(hideIsLoading()));
+    }, 1000);
   };
 };
 
 // Поиск фильмов по ключевым словам в сохраненных фильмах
 const handleSearchByWordSaved = (word, isShortMovies, isSavedMovie) => {
   return (dispatch) => {
-    const searchByWords = isSavedMovie.filter((item) => {
-      if (isShortMovies) {
-        return item.duration <= 40 && item.nameRU.toLowerCase().includes(word.toLowerCase());
-      }
-      return item.nameRU.toLowerCase().includes(word.toLowerCase());
+    dispatch(showIsLoading());
+    let getPromiseSearchInSaveMovies = new Promise((resolve, reject) => {
+      resolve(
+        isSavedMovie.filter((item) => {
+          if (isShortMovies) {
+            return item.duration <= 40 && item.nameRU.toLowerCase().includes(word.toLowerCase());
+          }
+          return item.nameRU.toLowerCase().includes(word.toLowerCase());
+        })
+      );
     });
-    dispatch(showSearchSavedMoviesAction(handleSearchFilms(searchByWords)));
-    dispatch(showIsNotFoundSearch());
+    setTimeout(() => {
+      getPromiseSearchInSaveMovies
+        .then((searchByWords) => {
+          dispatch(showSearchSavedMoviesAction(handleSearchFilms(searchByWords)));
+          dispatch(showIsNotFoundSearch());
+        })
+        .catch((err) => console.log(err))
+        .finally(() => dispatch(hideIsLoading()));
+    }, 1000);
   };
 };
 
